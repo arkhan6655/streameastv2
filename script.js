@@ -86,7 +86,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (sportsData.sortedByLive.length > 0) {
           sportsData.sortedByLive.forEach(category => {
             const categoryCard = document.createElement("a");
-            categoryCard.href = `/schedule/?sport=${encodeURIComponent(category.name)}`;
+            categoryCard.href = `/Schedule/#/${encodeURIComponent(category.name)}`;
             categoryCard.className = "category-card";
             let liveBadge = (category.liveCount > 0) ? `<span class="live-badge">${category.liveCount} Live</span>` : '';
             categoryCard.innerHTML = `<span class="category-name">${category.name}</span>${liveBadge}`;
@@ -111,5 +111,6 @@ document.addEventListener("DOMContentLoaded", () => {
   window.addEventListener('resize', generateNavMenu);
   initializePage();
 });
+
 
 
