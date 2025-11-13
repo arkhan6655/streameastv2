@@ -1,7 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
   const apiURL = "https://topembed.pw/api.php?format=json";
   
-  // Get references to the new placeholder and the real content grid
   const categoriesPlaceholder = document.getElementById("categories-placeholder");
   const categoriesGrid = document.getElementById("categories-grid");
   
@@ -59,13 +58,23 @@ document.addEventListener("DOMContentLoaded", () => {
       .then(data => {
         const now = Math.floor(Date.now() / 1000);
         const categories = {};
+
         if (data.events) {
           for (const date in data.events) {
             data.events[date].forEach(event => {
               const sport = event.sport;
               if (!sport) return;
-              if (!categories[sport]) categories[sport] = { liveCount: 0, name: sport };
-              if ((now - event.unix_timestamp) / 60 < 150) categories[sport].liveCount++;
+              if (!categories[sport]) {
+                categories[sport] = { liveCount: 0, name: sport };
+              }
+              
+              const diffMinutes = (now - event.unix_timestamp) / 60;
+              
+              // *** THIS IS THE CORRECTED LOGIC ***
+              // It now checks if the match has started (diffMinutes >= 0)
+              if (diffMinutes >= 0 && diffMinutes < 150) {
+                categories[sport].liveCount++;
+              }
             });
           }
         }
@@ -73,7 +82,6 @@ document.addEventListener("DOMContentLoaded", () => {
         sportsData = { sortedByLive: Object.values(categories).sort((a, b) => b.liveCount - a.liveCount) };
         generateNavMenu();
 
-        // Populate the real grid (it's still hidden)
         categoriesGrid.innerHTML = ""; 
         if (sportsData.sortedByLive.length > 0) {
           sportsData.sortedByLive.forEach(category => {
@@ -88,9 +96,8 @@ document.addEventListener("DOMContentLoaded", () => {
           categoriesGrid.innerHTML = `<p>No sports categories available right now.</p>`;
         }
 
-        // SWAP the placeholder for the real content
         categoriesPlaceholder.style.display = 'none';
-        categoriesGrid.style.display = 'grid'; // Use 'grid' to match CSS
+        categoriesGrid.style.display = 'grid';
         scheduleButtonWrapper.style.display = 'block';
       })
       .catch(err => {
