@@ -1,226 +1,130 @@
-// --- [v4 - HIGH PERFORMANCE SCRIPT FOR BUFFSTREAMS] ---
+document.addEventListener("DOMContentLoaded", () => {
+  const apiURL = "https://topembed.pw/api.php?format=json";
+  const loadingDiv = document.getElementById("loading");
+  
+  // Menu Elements
+  const navMenu = document.getElementById("nav-menu");
+  const prioritySports = ["Football", "Basketball", "Baseball", "Tennis", "UFC", "F1", "Cricket", "Boxing", "American Football", "Ice Hockey"];
 
-// =========================================================================
-// === CRITICAL FIRST-PAINT LOGIC ===
-// =========================================================================
-document.addEventListener("DOMContentLoaded", function() {
+  // Category Elements
+  const categoriesGrid = document.getElementById("categories-grid");
+  const categoriesSection = document.getElementById("categories-section");
+  const scheduleButtonWrapper = document.getElementById("schedule-btn-wrapper");
 
-    // --- 1. STICKY HEADER LOGIC ---
-    (function setupStickyHeader() {
-        const header = document.querySelector(".main-header");
-        const titleElement = document.getElementById("main-title");
-        if (!header || !titleElement) return;
-        window.addEventListener("scroll", function() {
-            const triggerPoint = titleElement.offsetTop + titleElement.offsetHeight;
-            header.classList.toggle("sticky", window.scrollY > triggerPoint);
-        }, { passive: true });
-    })();
+  // Sticky Menu Logic
+  const stickyMenu = document.getElementById('sticky-menu');
+  const mainContent = document.querySelector('main');
+  // Get the initial position of the navigation bar
+  const stickyPos = stickyMenu.offsetTop;
 
-});
+  function handleStickyMenu() {
+    if (window.pageYOffset >= stickyPos) {
+      stickyMenu.classList.add('sticky');
+      mainContent.style.paddingTop = stickyMenu.offsetHeight + 'px';
+    } else {
+      stickyMenu.classList.remove('sticky');
+      mainContent.style.paddingTop = '0';
+    }
+  }
 
-// =========================================================================
-// === DEFERRED, NON-CRITICAL LOGIC (RUNS AFTER PAGE LOAD) ===
-// =========================================================================
-window.addEventListener('load', function() {
+  window.addEventListener('scroll', handleStickyMenu);
 
-    const CONFIG = {
-        apiBaseUrl: 'https://streamed.pk/api',
-        matchPageUrl: '/Matchinformation/',
-        searchResultUrl: '/SearchResult/',
-        searchUrlHash: '#search',
-        discordServerId: '1422384816472457288', // IMPORTANT: Change if you have a different server ID
-        discordFallbackInvite: 'https://discord.gg/buffstreams',
-        placeholderImageUrl: '/Fallbackimage.webp'
-    };
+  // Show loader initially
+  loadingDiv.style.display = "block";
+  categoriesSection.style.display = "none";
+  scheduleButtonWrapper.style.display = "none";
 
-    // --- 2. SCROLL ANIMATION LOGIC ---
-    (function setupScrollAnimations() {
-        const animatedElements = document.querySelectorAll('.animate-on-scroll');
-        if (!animatedElements.length) return;
-        if ('IntersectionObserver' in window) {
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('is-visible');
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, { threshold: 0.1 });
-            animatedElements.forEach(element => observer.observe(element));
-        } else {
-            animatedElements.forEach(el => el.classList.add('is-visible'));
+  fetch(apiURL)
+    .then(res => res.json())
+    .then(data => {
+      const now = Math.floor(Date.now() / 1000);
+      const categories = {};
+
+      if (data.events) {
+        for (const date in data.events) {
+          data.events[date].forEach(event => {
+            const sport = event.sport;
+            if (!sport) return;
+            if (!categories[sport]) {
+              categories[sport] = { liveCount: 0, name: sport };
+            }
+            const diffMinutes = (now - event.unix_timestamp) / 60;
+            if (diffMinutes >= 0 && diffMinutes < 150) {
+              categories[sport].liveCount++;
+            }
+          });
         }
-    })();
+      }
 
-    // --- 3. HOMEPAGE SEARCH REDIRECT LOGIC ---
-    (function setupSearchRedirect() {
-        const searchTrigger = document.getElementById('search-trigger');
-        if (searchTrigger) {
-            searchTrigger.addEventListener('click', function() {
-                window.location.href = '/SearchResult/?focus=true';
-            });
+      // --- 1. DYNAMIC MENU GENERATION (Updated) ---
+      const sortedByLive = Object.values(categories).sort((a, b) => b.liveCount - a.liveCount);
+      let menuItems = [];
+      const addedSports = new Set();
+      const maxDynamicItems = 3; // Controls how many sports to show after Home and Schedule
+
+      // Add categories with the most live matches
+      sortedByLive.forEach(cat => {
+        if (cat.liveCount > 0 && menuItems.length < maxDynamicItems) {
+          menuItems.push(cat.name);
+          addedSports.add(cat.name);
         }
-    })();
+      });
 
-    // --- 4. DISCORD INVITE LINK FETCHER LOGIC ---
-    (function fetchDiscordInvite() {
-        const apiUrl = `https://discord.com/api/guilds/${CONFIG.discordServerId}/widget.json`;
-        const discordButton = document.getElementById("discord-join-link");
-        if (!discordButton) return;
-        fetch(apiUrl)
-            .then(res => res.ok ? res.json() : Promise.reject('API fetch failed'))
-            .then(data => {
-                if (data.instant_invite) discordButton.href = data.instant_invite;
-                else discordButton.href = CONFIG.discordFallbackInvite;
-            })
-            .catch(() => {
-                discordButton.href = CONFIG.discordFallbackInvite;
-            });
-    })();
-    
-    
+      // Fill remaining slots with priority sports
+      prioritySports.forEach(sport => {
+        if (!addedSports.has(sport) && menuItems.length < maxDynamicItems) {
+          menuItems.push(sport);
+        }
+      });
+      
+      // Build the menu HTML with Home and Schedule first
+      let menuHTML = `
+        <li class="menu-item"><a href="/" class="active">Home</a></li>
+        <li class="menu-item"><a href="/schedule/">Schedule</a></li>
+      `;
+      menuItems.forEach(item => {
+        menuHTML += `<li class="menu-item"><a href="/schedule/?sport=${encodeURIComponent(item)}">${item}</a></li>`;
+      });
+      navMenu.innerHTML = menuHTML;
 
-    // =========================================================================
-    // === [NEW] DYNAMIC CATEGORY SORTING LOGIC ===
-    // =========================================================================
-    (function initializeLiveCategorySorting() {
-        const API_BASE = 'https://streamed.pk/api';
-        const categoriesGrid = document.querySelector('.categories-grid');
-    
-        // Store static data for each category, mirroring the original HTML.
-        const staticCategoryData = [
-            { name: 'Basketball', href: '/Schedule/#/basketball', imgSrc: './Images/Basketball.webp', key: 'basketball' },
-            { name: 'Football', href: '/Schedule/#/football', imgSrc: './Images/Football.webp', key: 'football' },
-            { name: 'American Football', href: '/Schedule/#/american-football', imgSrc: './Images/American-football.webp', key: 'american-football' },
-            { name: 'Hockey', href: '/Schedule/#/hockey', imgSrc: './Images/Hockey.webp', key: 'hockey' },
-            { name: 'Baseball', href: '/Schedule/#/baseball', imgSrc: './Images/Baseball.webp', key: 'baseball' },
-            { name: 'Motor-sports', href: '/Schedule/#/motor-sports', imgSrc: './Images/Motor-sport.webp', key: 'motor-sports' },
-            { name: 'Fight', href: '/Schedule/#/fight', imgSrc: './Images/Fight.webp', key: 'fight' },
-            { name: 'Tennis', href: '/Schedule/#/tennis', imgSrc: './Images/Tennis.webp', key: 'tennis' },
-            { name: 'Rugby', href: '/Schedule/#/rugby', imgSrc: './Images/Rugby.webp', key: 'rugby' },
-            { name: 'Golf', href: '/Schedule/#/golf', imgSrc: './Images/Golf.webp', key: 'golf' },
-            { name: 'Billiards', href: '/Schedule/#/billiards', imgSrc: './Images/Billiards.webp', key: 'billiards' },
-            { name: 'AFL', href: '/Schedule/#/afl', imgSrc: './Images/AFL.webp', key: 'afl' },
-            { name: 'Darts', href: '/Schedule/#/darts', imgSrc: './Images/Darts.webp', key: 'darts' },
-            { name: 'Cricket', href: '/Schedule/#/cricket', imgSrc: './Images/Cricket.webp', key: 'cricket' },
-            { name: 'Other', href: '/Schedule/#/other', imgSrc: './Images/Other.webp', key: 'other' }
-        ];
-    
-        // [UPDATED] Viewer formatting function as requested.
-        const formatViewers = (num) => {
-            if (num >= 1000) {
-                // Returns 1.3k for 1300, or 1k for 1000
-                return (num / 1000).toFixed(1).replace(/\.0$/, '') + 'k';
-            }
-            // Returns the exact number if below 1000
-            return num;
-        };
-    
-        // [UPDATED] Card creation now includes the eye icon SVG.
-        const createCategoryCard = (category) => {
-            const card = document.createElement('a');
-            card.href = category.href;
-            card.className = 'category-card';
-    
-            const img = document.createElement('img');
-            img.src = category.imgSrc;
-            img.alt = `${category.name} Logo`;
-            img.loading = 'lazy';
-            img.width = 90;
-            img.height = 90;
-            
-            const span = document.createElement('span');
-            span.textContent = category.name;
-            
-            card.appendChild(img);
-            card.appendChild(span);
-    
-            if (category.viewers > 0) {
-                const badge = document.createElement('div');
-                badge.className = 'live-badge';
-                
-                // --- Eye Icon SVG --- (Performance-friendly inline SVG)
-                const eyeIconSVG = `<svg class="viewer-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"></path></svg>`;
+      // --- 2. DYNAMIC CATEGORY CARD GENERATION ---
+      const allSortedCategories = Object.values(categories).sort((a, b) => b.liveCount - a.liveCount);
+      categoriesGrid.innerHTML = ""; 
 
-                // Use innerHTML to add the number and the icon SVG
-                badge.innerHTML = `<span>${formatViewers(category.viewers)}</span>${eyeIconSVG}`;
+      if (allSortedCategories.length > 0) {
+        allSortedCategories.forEach(category => {
+          const categoryCard = document.createElement("a");
+          categoryCard.href = `/schedule/?sport=${encodeURIComponent(category.name)}`;
+          categoryCard.className = "category-card";
+          let liveBadge = (category.liveCount > 0) 
+            ? `<span class="live-badge">${category.liveCount} Live</span>` 
+            : '';
+          categoryCard.innerHTML = `
+            <span class="category-name">${category.name}</span>
+            ${liveBadge}
+          `;
+          categoriesGrid.appendChild(categoryCard);
+        });
+      } else {
+        categoriesGrid.innerHTML = `<p>No sports categories available right now.</p>`;
+      }
 
-                card.appendChild(badge);
-                setTimeout(() => badge.classList.add('visible'), 50);
-            }
-    
-            return card;
-        };
-    
-        const updateHomepageCategories = async () => {
-            if (!categoriesGrid) return;
-    
-            try {
-                const matchesRes = await fetch(`${API_BASE}/matches/live`);
-                if (!matchesRes.ok) throw new Error('Failed to fetch live matches');
-                const liveMatches = await matchesRes.json();
-    
-                if (liveMatches.length === 0) {
-                    console.log("No live matches currently. Displaying default order.");
-                    return;
-                }
-    
-                const streamFetchPromises = liveMatches.flatMap(match =>
-                    match.sources.map(source =>
-                        fetch(`${API_BASE}/stream/${source.source}/${source.id}`)
-                            .then(res => res.ok ? res.json() : [])
-                            .then(streams => ({ category: match.category, streams }))
-                    )
-                );
-    
-                const results = await Promise.allSettled(streamFetchPromises);
-    
-                const viewerCounts = {};
-                const categoryMapping = { 'mma': 'fight', 'boxing': 'fight' };
-    
-                results.forEach(result => {
-                    if (result.status === 'fulfilled' && result.value) {
-                        let { category, streams } = result.value;
-                        const mappedCategory = categoryMapping[category] || category;
-    
-                        if (!viewerCounts[mappedCategory]) viewerCounts[mappedCategory] = 0;
-                        
-                        streams.forEach(stream => {
-                            if (stream.viewers && typeof stream.viewers === 'number') {
-                                viewerCounts[mappedCategory] += stream.viewers;
-                            }
-                        });
-                    }
-                });
-    
-                const dynamicCategoryData = staticCategoryData.map(category => ({
-                    ...category,
-                    viewers: viewerCounts[category.key] || 0
-                }));
-    
-                dynamicCategoryData.sort((a, b) => b.viewers - a.viewers);
-    
-                categoriesGrid.innerHTML = ''; // Clear existing static cards
-                dynamicCategoryData.forEach((category, index) => {
-                    const card = createCategoryCard(category);
-                    if (index < 4) { // Eager load the top categories for performance
-                        const img = card.querySelector('img');
-                        if(img) {
-                           img.loading = 'eager';
-                           img.fetchPriority = 'high';
-                        }
-                    }
-                    categoriesGrid.appendChild(card);
-                });
-    
-            } catch (error) {
-                console.error("Error updating live categories:", error);
-                // If an error occurs, the original static HTML will remain as a fallback.
-            }
-        };
-    
-        updateHomepageCategories();
-    
-    })();
+      // Hide loader and show content
+      loadingDiv.style.display = "none";
+      categoriesSection.style.display = "block";
+      scheduleButtonWrapper.style.display = "block";
+    })
+    .catch(err => {
+      loadingDiv.innerHTML = `<p style="color:red;">⚠ Error loading content.</p>`;
+      console.error(err);
+    });
 
+  // Sticky ad close button
+  const closeAd = document.getElementById('close-ad');
+  const stickyAd = document.getElementById('sticky-footer-ad');
+  if (closeAd && stickyAd) {
+    closeAd.addEventListener('click', () => {
+      stickyAd.style.display = 'none';
+    });
+  }
 });
