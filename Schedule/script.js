@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!addedSports.has(sport) && menuItems.length < maxDynamicItems) menuItems.push(sport);
     });
     let menuHTML = `<li class="menu-item"><a href="/" class="active">Home</a></li>`;
-    menuItems.forEach(item => { menuHTML += `<li class="menu-item"><a href="/schedule#/${item.toLowerCase()}">${item}</a></li>`; });
+    menuItems.forEach(item => { menuHTML += `<li class="menu-item"><a href="/schedule/#/${item.toLowerCase()}">${item}</a></li>`; });
     navMenu.innerHTML = menuHTML;
   }
   
@@ -206,3 +206,4 @@ document.addEventListener("DOMContentLoaded", () => {
   initializePage();
 
 });
+
