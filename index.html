@@ -15,7 +15,7 @@
 
   <header id="sticky-menu" class="main-header">
     <ul id="nav-menu" class="nav-menu">
-      <!-- STATIC 5-ITEM FALLBACK MENU: Optimized for instant mobile load. JS will replace this. -->
+      <!-- Static fallback menu for instant load -->
       <li class="menu-item"><a href="/" class="active">Home</a></li>
       <li class="menu-item schedule-item"><a href="/schedule/">Schedule</a></li>
       <li class="menu-item"><a href="/schedule/?sport=Football">Football</a></li>
@@ -30,13 +30,21 @@
       <p>Live streams for NFL, NBA, MLB, UFC, WWE and more. Never miss a game.</p>
     </section>
 
-    <div id="loading">
-      <div class="spinner"></div>
-      <p>Loading Categories...</p>
-    </div>
+    <section id="categories-section" class="categories-container">
+      <!-- NEW: Placeholder Skeleton for CLS Prevention -->
+      <div id="categories-placeholder" class="categories-grid">
+        <div class="placeholder-card"></div>
+        <div class="placeholder-card"></div>
+        <div class="placeholder-card"></div>
+        <div class="placeholder-card"></div>
+        <div class="placeholder-card"></div>
+        <div class="placeholder-card"></div>
+        <div class="placeholder-card"></div>
+        <div class="placeholder-card"></div>
+      </div>
 
-    <section id="categories-section" class="categories-container" style="display: none;">
-      <div id="categories-grid" class="categories-grid"></div>
+      <!-- Real content grid, hidden initially -->
+      <div id="categories-grid" class="categories-grid" style="display: none;"></div>
     </section>
 
     <div id="schedule-btn-wrapper" class="schedule-btn-container" style="display: none;">
@@ -45,36 +53,13 @@
   </main>
 
   <footer>
-    <div class="disclaimer-box">
-      <h3>Disclaimer</h3>
-      <p>
-        We do not host or own any media content; all streams are sourced from
-        third-party sites. We do not take any responsibility for copyright issues.
-        Copyright concerns should be directed to the original host. We have no
-        control over ads in embedded players and receive no revenue from them.
-        <a href="/Disclaimer/">Learn More!</a>
-      </p>
-    </div>
-    <ul class="footer-menu">
-      <li><a href="/">Home</a></li>
-      <li><a href="/About/">About</a></li>
-      <li><a href="/Terms/">Terms</a></li>
-      <li><a href="/Privacy/">Privacy</a></li>
-      <li><a href="/Disclaimer/">Disclaimer</a></li>
-      <li><a href="/DMCA/">DMCA</a></li>
-      <li><a href="/Contact/">Contact Us</a></li>
-    </ul>
+    <!-- Footer content remains the same -->
+    <div class="disclaimer-box"><h3>Disclaimer</h3><p>We do not host or own any media content; all streams are sourced from third-party sites. We do not take any responsibility for copyright issues. Copyright concerns should be directed to the original host. We have no control over ads in embedded players and receive no revenue from them. <a href="/Disclaimer/">Learn More!</a></p></div>
+    <ul class="footer-menu"><li><a href="/">Home</a></li><li><a href="/About/">About</a></li><li><a href="/Terms/">Terms</a></li><li><a href="/Privacy/">Privacy</a></li><li><a href="/Disclaimer/">Disclaimer</a></li><li><a href="/DMCA/">DMCA</a></li><li><a href="/Contact/">Contact Us</a></li></ul>
     <p>© 2025 Streameast V2. All rights reserved.</p>
   </footer>
 
-  <div id="sticky-footer-ad">
-    <div class="ad-content">
-      <span class="emoji">📲</span>
-      <span class="cta-text">Get the App!</span>
-      <a href="https://tinyurl.com/methstreamsapp" class="download-btn" rel="nofollow" target="_blank">⬇ Download</a>
-    </div>
-    <span id="close-ad">&#10060;</span>
-  </div>
+  <div id="sticky-footer-ad"><!-- Ad content remains the same --><div class="ad-content"><span class="emoji">📲</span><span class="cta-text">Get the App!</span><a href="https://tinyurl.com/methstreamsapp" class="download-btn" rel="nofollow" target="_blank">⬇ Download</a></div><span id="close-ad">&#10060;</span></div>
 
   <script src="script.js" defer></script>
   <script src="/mobiledetectscript.js" defer></script>
