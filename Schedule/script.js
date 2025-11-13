@@ -1,0 +1,207 @@
+document.addEventListener("DOMContentLoaded", () => {
+  const API_URL = "https://topembed.pw/api.php?format=json";
+
+  const pageTitle = document.getElementById("page-title"),
+        pageHeading = document.getElementById("page-heading"),
+        pageDescription = document.getElementById("page-description"),
+        navMenu = document.getElementById("nav-menu"),
+        statusBtns = document.querySelectorAll(".status-filters .filter-btn"),
+        sportSelect = document.getElementById("sport-select"),
+        liveCountSpan = document.getElementById("live-count"),
+        tablePlaceholder = document.getElementById("table-placeholder"),
+        matchesTable = document.getElementById("matches-table"),
+        matchesBody = document.getElementById("matches-body"),
+        stickyMenu = document.getElementById('sticky-menu'),
+        mainContent = document.querySelector('main');
+
+  let allMatches = [];
+  let state = { sport: "all", status: "all" };
+  let menuData = null;
+  const prioritySports = ["Football", "Basketball", "Baseball", "Tennis", "UFC", "F1"];
+
+  function handleStickyMenu() {
+    const stickyPos = stickyMenu.offsetTop;
+    if (window.pageYOffset > stickyPos) {
+      if (!stickyMenu.classList.contains('sticky')) {
+        mainContent.style.paddingTop = stickyMenu.offsetHeight + 'px';
+        stickyMenu.classList.add('sticky');
+      }
+    } else {
+      if (stickyMenu.classList.contains('sticky')) {
+        mainContent.style.paddingTop = '0';
+        stickyMenu.classList.remove('sticky');
+      }
+    }
+  }
+
+  function generateNavMenu() {
+    const isMobile = window.matchMedia("(max-width: 768px)").matches;
+    const maxDynamicItems = isMobile ? 4 : 6;
+    let menuItems = [];
+    const addedSports = new Set();
+    if (menuData) {
+      menuData.forEach(cat => {
+        if (cat.liveCount > 0 && menuItems.length < maxDynamicItems) {
+          menuItems.push(cat.name);
+          addedSports.add(cat.name);
+        }
+      });
+    }
+    prioritySports.forEach(sport => {
+      if (!addedSports.has(sport) && menuItems.length < maxDynamicItems) menuItems.push(sport);
+    });
+    let menuHTML = `<li class="menu-item"><a href="/" class="active">Home</a></li>`;
+    menuItems.forEach(item => { menuHTML += `<li class="menu-item"><a href="/schedule/#/${item.toLowerCase()}">${item}</a></li>`; });
+    navMenu.innerHTML = menuHTML;
+  }
+  
+  function handleHashChange() {
+    const hash = window.location.hash.replace("#/", "").toLowerCase() || "all";
+    state.sport = hash;
+    sportSelect.value = state.sport;
+    updateUI();
+  }
+
+  function updateUI() {
+    renderFilteredMatches();
+    updatePageMeta();
+    updateActiveButtons();
+    updateLiveCount();
+  }
+  
+  function formatTime(unix) {
+    return new Date(unix * 1000).toLocaleString(undefined, {
+      weekday: "short", 
+      month: "short", 
+      day: "numeric", 
+      hour: "2-digit", 
+      minute: "2-digit",
+      hour12: true 
+    });
+  }
+
+  function renderFilteredMatches() {
+    let filtered = allMatches;
+    if (state.sport !== "all") {
+      filtered = filtered.filter(m => m.sport.toLowerCase() === state.sport);
+    }
+    if (state.status !== "all") {
+      filtered = filtered.filter(m => m.status === state.status);
+    }
+
+    matchesBody.innerHTML = "";
+    if (filtered.length === 0) {
+      matchesBody.innerHTML = `<tr><td colspan="5">⚠ No matches found for this filter.</td></tr>`;
+      return;
+    }
+    
+    const fragment = document.createDocumentFragment();
+    filtered.forEach(m => {
+      let badge = '';
+      if (m.status === 'live') badge = '<span class="badge live"></span>';
+      else if (m.status === 'finished') badge = '<span class="badge finished"></span>';
+      
+      const row = document.createElement("tr");
+      // This class is no longer needed to style the button, but can be kept for other potential styling
+      if (m.status === 'finished') row.classList.add('finished-match');
+
+      row.innerHTML = `
+        <td>${m.time}</td>
+        <td>${m.sport}</td>
+        <td>${m.tournament}</td>
+        <td>${m.match} ${badge}</td>
+        <td><a class="watch-btn" href="${m.url}">Watch</a></td>`;
+      fragment.appendChild(row);
+    });
+    matchesBody.appendChild(fragment);
+  }
+
+  function updatePageMeta() {
+    const sportName = state.sport === 'all' ? 'Full Sports' : state.sport.charAt(0).toUpperCase() + state.sport.slice(1);
+    const title = `Streameast V2 ${sportName} Schedule`;
+    pageTitle.textContent = title;
+    pageHeading.textContent = title;
+    pageDescription.textContent = `See the ${sportName} schedule on streameast V2 and find your favorite match.`;
+  }
+  
+  function updateActiveButtons() {
+    statusBtns.forEach(btn => btn.classList.toggle('active', btn.id.startsWith(state.status)));
+  }
+
+  function updateLiveCount() {
+    const liveMatches = allMatches.filter(match => {
+      if (state.sport === 'all') {
+        return match.status === 'live';
+      }
+      return match.status === 'live' && match.sport.toLowerCase() === state.sport;
+    });
+    liveCountSpan.textContent = liveMatches.length;
+  }
+
+  async function initializePage() {
+    try {
+      const response = await fetch(API_URL);
+      if (!response.ok) throw new Error('API request failed');
+      const data = await response.json();
+      
+      const now = Math.floor(Date.now() / 1000);
+      const sports = new Set();
+      const tempMenuData = {};
+
+      for (const date in data.events) {
+        data.events[date].forEach((event, idx) => {
+          const diffMinutes = (now - event.unix_timestamp) / 60;
+          const sportName = event.sport ? event.sport.toLowerCase() : '';
+
+          if (sportName === 'cricket' && diffMinutes >= 480) return;
+          if (sportName !== 'cricket' && diffMinutes >= 180) return;
+          
+          let status;
+          if (diffMinutes < 0) status = "upcoming";
+          else if (diffMinutes >= 0 && diffMinutes < 150) status = "live";
+          else status = "finished";
+
+          if (event.sport) {
+            allMatches.push({
+              time: formatTime(event.unix_timestamp),
+              sport: event.sport,
+              tournament: event.tournament || "-",
+              match: event.match || "-",
+              status,
+              url: `/StreamPage/?id=${event.unix_timestamp}_${idx}`
+            });
+            sports.add(event.sport);
+            
+            if (!tempMenuData[event.sport]) tempMenuData[event.sport] = { liveCount: 0, name: event.sport };
+            if (status === 'live') tempMenuData[event.sport].liveCount++;
+          }
+        });
+      }
+      
+      menuData = Object.values(tempMenuData).sort((a, b) => b.liveCount - a.liveCount);
+      [...sports].sort().forEach(sport => {
+        sportSelect.appendChild(new Option(sport, sport.toLowerCase()));
+      });
+      
+      statusBtns.forEach(btn => btn.addEventListener("click", (e) => { state.status = e.currentTarget.id.replace('-btn', ''); updateUI(); }));
+      sportSelect.addEventListener("change", (e) => { window.location.hash = e.target.value === 'all' ? '/' : `/${e.target.value}`; });
+      window.addEventListener("hashchange", handleHashChange);
+      window.addEventListener('resize', generateNavMenu);
+      window.addEventListener('scroll', handleStickyMenu);
+
+      handleHashChange();
+      generateNavMenu();
+
+      tablePlaceholder.style.display = "none";
+      matchesTable.style.display = "table";
+
+    } catch (err) {
+      console.error("Failed to load match data:", err);
+      tablePlaceholder.style.display = "none";
+      matchesTable.innerHTML = `<tr><td colspan="5" style="color:red;">⚠ Error loading matches.</td></tr>`;
+      matchesTable.style.display = "table";
+    }
+  }
+
+  initializePage();
+});

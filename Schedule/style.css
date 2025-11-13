@@ -1,0 +1,82 @@
+/* ====== BASE & LAYOUT FIX ====== */
+body { 
+  margin: 0; 
+  font-family: Arial, sans-serif; 
+  line-height: 1.5; 
+  background: #111; 
+  color: #fff; 
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+main { 
+  transition: padding-top 0.2s ease-out; 
+  flex-grow: 1;
+}
+
+/* ====== SHARED HEADER & FOOTER ====== */
+.site-title-section { text-align: center; padding: 12px 10px; background: #111; border-bottom: 1px solid #ff5e00; }
+.site-title-section h1 { font-size: 20px; font-weight: 700; margin: 0; color: #fff; }
+header.main-header { background: #111; padding: 8px 10px; display: flex; justify-content: center; border-bottom: 1px solid #333; }
+header.main-header.sticky { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
+.nav-menu { width: 100%; max-width: 1200px; display: flex; gap: 8px; list-style: none; margin: 0; padding: 0; justify-content: center; align-items: center; }
+.nav-menu li.menu-item { flex-shrink: 1; }
+.nav-menu li a { display: block; text-align: center; color: #ddd; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; white-space: nowrap; }
+.nav-menu li a:hover, .nav-menu li a.active { background: #ff4747; color: #fff; }
+footer { background: #222; text-align: center; padding: 1rem; margin-top: 2rem; }
+.footer-menu { list-style: none; padding: 0; margin-bottom: 10px; display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; }
+.footer-menu a { color: #aaa; text-decoration: none; font-size: 14px; }
+.disclaimer-box { background: #111; color: #ddd; padding: 15px 20px; border: 1px solid #333; border-radius: 8px; max-width: 900px; margin: 0 auto 20px; text-align: left; }
+footer p { padding-bottom: 60px; }
+
+/* ====== PAGE-SPECIFIC HEADER ====== */
+.page-header { text-align: center; padding: 25px 20px; background: #1a1a1a; border-bottom: 1px solid #ff5e00; }
+.page-header h1 { margin: 0 0 10px; font-size: 1.8rem; color: #fff; }
+.page-header p { margin: 0; color: #ccc; max-width: 600px; margin-left: auto; margin-right: auto; }
+
+/* ====== FILTER CONTROLS ====== */
+.filter-controls { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 20px; padding: 20px 10px; background: #111; border-bottom: 1px solid #333; }
+.status-filters { display: flex; gap: 12px; }
+.filter-btn { background: #222; color: #fff; padding: 8px 16px; border-radius: 20px; border: 1px solid #f60; cursor: pointer; font-weight: 600; transition: .3s; }
+.filter-btn.active, .filter-btn:hover { box-shadow: 0 0 10px rgba(255,102,0,.8); background: #f60; }
+#live-count { background: #fff; color: #e60023; padding: 2px 6px; border-radius: 50%; font-size: 12px; margin-left: 5px; font-weight: 700; animation: pulseLiveCount 1.5s infinite; }
+@keyframes pulseLiveCount{ 0%{box-shadow:0 0 0 0 rgba(230,0,35,.6)} 70%{box-shadow:0 0 0 8px rgba(230,0,35,0)} 100%{box-shadow:0 0 0 0 rgba(230,0,35,0)} }
+.sport-filter select { background: #222; color: #fff; border: 1px solid #f60; border-radius: 20px; padding: 8px 16px; font-size: 14px; cursor: pointer; }
+
+/* ====== TABLE STYLES ====== */
+.table-container { width: 95%; max-width: 1200px; margin: 2rem auto; overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+th, td { padding: 12px; text-align: center; word-wrap: break-word; }
+th { background: #000; color: #fff; font-weight: 600; }
+tbody tr:nth-child(even) { background: #1e1e1e; }
+td { border-bottom: 1px solid #333; font-size: 0.9rem; }
+.watch-btn { background: #28a745; color: white; padding: 6px 10px; border-radius: 50px; text-decoration: none; font-weight: 500; }
+.badge { display:inline-block; width:8px; height:8px; border-radius:50%; margin-left:5px; }
+.badge.live { background:#28a745; animation:1s infinite pulseBadge; }
+.badge.finished { background: #dc3545; }
+@keyframes pulseBadge{ 0%,100%{transform:scale(1);opacity:1} 50%{transform:scale(1.3);opacity:.7}}
+
+/* Restored button color for finished matches, but it remains clickable */
+.finished-match .watch-btn { background-color: #6c757d; }
+
+/* ====== TABLE PLACEHOLDER ====== */
+#table-placeholder tbody td { padding: 20px; background-image: linear-gradient(90deg, #1c1c1c 0px, #2a2a2a 40px, #1c1c1c 80px); background-size: 600px; animation: shimmer 1.5s infinite linear; }
+@keyframes shimmer { 0% { background-position: -300px 0; } 100% { background-position: 300px 0; } }
+
+/* ====== STICKY FOOTER AD ====== */
+#sticky-footer-ad { position: fixed; bottom: 0; left: 0; width: 100%; background: linear-gradient(270deg, #ff5e00, #ff8c00, #ff5e00); background-size: 600% 600%; animation: gradientShift 8s ease infinite; padding: 10px; z-index: 999; display: flex; justify-content: center; align-items: center; box-shadow: 0 -3px 10px rgba(0,0,0,0.4); }
+.ad-content { display: flex; align-items: center; gap: 8px; }
+.emoji { font-size: 24px; }
+.cta-text { font-size: 16px; font-weight: bold; }
+.download-btn { background: #111; color: #fff; padding: 8px 20px; border-radius: 25px; font-size: 16px; font-weight: bold; text-decoration: none; }
+#close-ad { position: absolute; top: 3px; right: 25px; font-size: 14px; padding: 5px; border-radius: 50%; background: #333; cursor: pointer; }
+@keyframes gradientShift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+
+/* ====== RESPONSIVE ====== */
+@media (max-width: 768px) {
+  .nav-menu { gap: 4px; }
+  .nav-menu li.menu-item { flex-grow: 1; flex-basis: 0; }
+  .nav-menu li a { font-size: 13px; padding: 8px 4px; }
+  .filter-controls { flex-direction: column; gap: 20px; }
+  th, td { font-size: 11px; padding: 8px 1px; }
+}
