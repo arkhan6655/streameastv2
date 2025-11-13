@@ -9,15 +9,18 @@
 </head>
 <body>
   
-  <!-- Site Title (Not Sticky) -->
   <div class="site-title-section">
     <h1>Streameast V2</h1>
   </div>
 
-  <!-- Header Menus (This part will be sticky) -->
   <header id="sticky-menu" class="main-header">
     <ul id="nav-menu" class="nav-menu">
-      <!-- Dynamic menu items will be inserted here -->
+      <!-- STATIC 5-ITEM FALLBACK MENU: Optimized for instant mobile load. JS will replace this. -->
+      <li class="menu-item"><a href="/" class="active">Home</a></li>
+      <li class="menu-item schedule-item"><a href="/schedule/">Schedule</a></li>
+      <li class="menu-item"><a href="/schedule/?sport=Football">Football</a></li>
+      <li class="menu-item"><a href="/schedule/?sport=Basketball">Basketball</a></li>
+      <li class="menu-item"><a href="/schedule/?sport=UFC">UFC</a></li>
     </ul>
   </header>
 
@@ -27,25 +30,20 @@
       <p>Live streams for NFL, NBA, MLB, UFC, WWE and more. Never miss a game.</p>
     </section>
 
-    <!-- Loading Spinner -->
     <div id="loading">
       <div class="spinner"></div>
       <p>Loading Categories...</p>
     </div>
 
     <section id="categories-section" class="categories-container" style="display: none;">
-      <div id="categories-grid" class="categories-grid">
-        <!-- Dynamic category cards will be inserted here -->
-      </div>
+      <div id="categories-grid" class="categories-grid"></div>
     </section>
 
-    <!-- Schedule Button -->
     <div id="schedule-btn-wrapper" class="schedule-btn-container" style="display: none;">
       <a href="/schedule/" class="schedule-btn">View Full Schedule</a>
     </div>
   </main>
 
-  <!-- Footer -->
   <footer>
     <div class="disclaimer-box">
       <h3>Disclaimer</h3>
@@ -78,7 +76,7 @@
     <span id="close-ad">&#10060;</span>
   </div>
 
-  <script src="script.js"></script>
+  <script src="script.js" defer></script>
   <script src="/mobiledetectscript.js" defer></script>
 </body>
 </html>
