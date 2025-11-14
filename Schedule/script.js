@@ -168,7 +168,7 @@ document.addEventListener("DOMContentLoaded", () => {
               tournament: event.tournament || "-",
               match: event.match || "-",
               status,
-              url: `/StreamPage/?id=${event.unix_timestamp}_${idx}`
+              url: `/Matchinformation/?id=${event.unix_timestamp}_${idx}`
             });
             sports.add(event.sport);
             
@@ -206,4 +206,5 @@ document.addEventListener("DOMContentLoaded", () => {
   initializePage();
 
 });
+
 
