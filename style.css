@@ -10,13 +10,11 @@ main { transition: padding-top 0.2s ease-out; }
 header.main-header { background: #111; padding: 8px 10px; display: flex; justify-content: center; border-bottom: 1px solid #333; }
 header.main-header.sticky { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; box-shadow: 0 4px 10px rgba(0,0,0,0.5); border-bottom: 1px solid #ff5e00; }
 .nav-menu { width: 100%; max-width: 1200px; display: flex; gap: 8px; list-style: none; margin: 0; padding: 0; justify-content: center; align-items: center; }
+.nav-menu li {display: flex; align-items: center;}
 .nav-menu li.menu-item { flex-shrink: 1; }
-.nav-menu li a { display: block; text-align: center; color: #ddd; text-decoration: none; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s ease; white-space: nowrap; }
+.nav-menu li a {text-align: center; color: #ddd; text-decoration: none; font-weight: 500; padding: 6px 15px; border-radius: 6px; white-space: nowrap; transition: all 0.2s ease;}
 .nav-menu li a:hover { background: #ff4747; color: #fff; }
-.nav-menu li a.active { background: #ff4747; color: #fff; font-weight: 700; }
-.nav-menu li.schedule-item a { background-color: #ff6600; color: #fff; font-weight: 700; box-shadow: 0 0 8px rgba(255, 102, 0, 0.5); }
-.nav-menu li.schedule-item a:hover { background-color: #ff8533; color: #111; }
-
+.nav-menu li:not(:last-child)::after {content: '|';color: #444; font-weight: 300;}
 /* ====== HERO SECTION ====== */
 .hero-section { text-align: center; padding: 40px 20px 20px 20px; background: #1a1a1a; }
 .hero-section h2 { font-size: 2.2rem; margin-bottom: 10px; }
@@ -75,3 +73,4 @@ footer { background: #222; text-align: center; padding: 1rem; margin-top: 2rem; 
   .category-name { font-size: 1.1rem; }
   .live-badge { font-size: 0.7rem; padding: 3px 6px; top: 8px; right: 8px; }
 }
+
