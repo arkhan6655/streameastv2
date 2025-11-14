@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
   const API_URL = "https://topembed.pw/api.php?format=json";
-  const STREAM_PAGE_URL = "https://your-other-website.com/streampage/"; 
+  const STREAM_PAGE_URL = "https://your-other-website.com/streampage/";
   const DISCORD_SERVER_ID = "1422384816472457288"; // Replace with your server ID
 
   const pageTitle = document.getElementById("page-title"),
@@ -90,7 +90,11 @@ document.addEventListener("DOMContentLoaded", () => {
     return decodeURIComponent(lastPart);
   }
 
-  function renderChannels(channels) {
+  /**
+   * MODIFIED FUNCTION
+   * Now accepts 'matchId' to build the new URL.
+   */
+  function renderChannels(channels, matchId) {
     streamCountSpan.textContent = channels.length;
     realGrid.innerHTML = "";
     if (channels.length > 0) {
@@ -98,7 +102,12 @@ document.addEventListener("DOMContentLoaded", () => {
         const channelName = getChannelName(channelUrl, index);
         const streamLink = document.createElement("a");
         streamLink.className = "stream-link";
-        streamLink.href = `${STREAM_PAGE_URL}?stream=${encodeURIComponent(channelUrl)}`;
+        
+        // --- CHANGE THIS LINE ---
+        // Old: streamLink.href = `${STREAM_PAGE_URL}?stream=${encodeURIComponent(channelUrl)}`;
+        // New URL now includes the unique match ID.
+        streamLink.href = `${STREAM_PAGE_URL}?id=${matchId}&stream=${encodeURIComponent(channelUrl)}`;
+        
         streamLink.target = "_blank";
         streamLink.rel = "nofollow";
 
@@ -193,7 +202,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
       updatePageMeta(foundMatch);
       const channelUrls = (foundMatch.channels || []).map(c => typeof c === 'object' ? c.channel : c).filter(Boolean);
-      renderChannels(channelUrls);
+      
+      // --- CHANGE THIS LINE ---
+      // Old: renderChannels(channelUrls);
+      // New call now passes the match ID to the function.
+      renderChannels(channelUrls, matchIdFromUrl);
 
       if (foundMatch.unix_timestamp > now) {
         startCountdown(foundMatch.unix_timestamp);
