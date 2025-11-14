@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="page-title">Streameast V2 Live Match Streaming Links</title>
+  
+  <link rel="preconnect" href="https://topembed.pw">
+  <link rel="preconnect" href="https://www.googletagmanager.com">
+  <link rel="preconnect" href="https://www.google-analytics.com">
+  <link rel="preconnect" href="https://discord.com">
+
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  
+  <style>
+    body{margin:0;font-family:Arial,sans-serif;line-height:1.5;background:#111;color:#fff;display:flex;flex-direction:column;min-height:100vh}main{flex-grow:1;transition:padding-top .2s ease-out}.site-title-section{text-align:center;padding:12px 10px;background:#111;border-bottom:1px solid #ff5e00}.site-title-section h1{font-size:20px;font-weight:700;margin:0;color:#fff}header.main-header{background:#111;padding:8px 10px;display:flex;justify-content:center;border-bottom:1px solid #333}.nav-menu{width:100%;max-width:1200px;display:flex;gap:8px;list-style:none;margin:0;padding:0;justify-content:center;align-items:center}.nav-menu li {display: flex; align-items: center;}.nav-menu li.menu-item{flex-shrink:1}.nav-menu li a{text-align: center; color: #ddd; text-decoration: none; font-weight: 500; padding: 6px 15px; border-radius: 6px; white-space: nowrap; transition: all 0.2s ease;}.nav-menu li a:hover {background:#ff4747;color:#fff}.nav-menu li:not(:last-child)::after {content: '|';color: #444; font-weight:300;}.content-wrapper{display:flex;align-items:flex-start;gap:1.5rem;max-width:1400px;margin:0 auto;padding:0 1rem}.page-header{text-align:center;padding:25px 20px;background:#1a1a1a}.page-header h1{margin:0 0 10px;font-size:1.8rem}.page-header p{margin:0;color:#ccc;max-width:600px;margin-left:auto;margin-right:auto}.stream-container{width:100%;flex-grow:1;max-width:900px}.placeholder-stream-link{height:74px;border-radius:10px;background-image:linear-gradient(90deg,#1c1c1c 0,#2a2a2a 40px,#1c1c1c 80px);background-size:600px;animation:1.5s linear infinite shimmer}@keyframes shimmer{0%{background-position:-300px 0}100%{background-position:300px 0}}@media (max-width:1300px){.content-wrapper{flex-direction:column;align-items:center}}
+  </style>
+
+  <link rel="preload" href="style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="style.css"></noscript>
+  
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'YOUR_GA_ID_HERE'); 
+  </script>
+</head>
+<body>
+  
+  <div class="site-title-section"><h1>Streameast V2</h1></div>
+  <header id="sticky-menu" class="main-header">
+    <ul id="nav-menu" class="nav-menu">
+      <!-- Static placeholder menu for CLS prevention -->
+      <li class="menu-item"><a href="/">Home</a></li>
+      <li class="menu-item"><a href="/schedule/">Schedule</a></li>
+      <li class="menu-item"><a href="#">Football</a></li>
+      <li class="menu-item"><a href="#">Basketball</a></li>
+      <li class="menu-item"><a href="#">UFC</a></li>
+    </ul>
+  </header>
+
+  <main>
+    <section class="page-header">
+      <h1 id="page-heading">Streameast V2 Match Live Streaming Links</h1>
+      <p id="page-description">To watch match streams, scroll down and choose a stream link of your choice. If no links appear, the event may not be live yet.</p>
+    </section>
+
+    <div class="content-wrapper">
+      <div class="stream-container">
+        <section id="countdown-container" class="countdown-container" style="display: none;">
+          <h3>Match Starts In:</h3>
+          <div id="countdown-timer" class="countdown-timer">
+              <div class="time-block"><div id="days" class="time-value">00</div><div class="time-label">Days</div></div>
+              <div class="time-block"><div id="hours" class="time-value">00</div><div class="time-label">Hours</div></div>
+              <div class="time-block"><div id="minutes" class="time-value">00</div><div class="time-label">Minutes</div></div>
+              <div class="time-block"><div id="seconds" class="time-value">00</div><div class="time-label">Seconds</div></div>
+          </div>
+        </section>
+        
+        <div class="stream-header">
+          <h2 id="sources-heading">Here are all the available sources:</h2>
+          <p>Total Streams: <span id="stream-count">Loading...</span></p>
+        </div>
+
+        <div id="stream-links-placeholder" class="stream-links-grid">
+          <div class="placeholder-stream-link"></div>
+          <div class="placeholder-stream-link"></div>
+          <div class="placeholder-stream-link"></div>
+        </div>
+        
+        <div id="stream-links-grid" class="stream-links-grid" style="display: none;"></div>
+      </div>
+
+      <aside class="discord-sidebar">
+        <div id="discord-widget-container">
+          <div class="discord-header">
+              <div class="header-text">
+                  <h3>Join our <span>Discord!</span></h3>
+                  <p><span id="discord-online-count">...</span> online members</p>
+              </div>
+              <a href="#" id="discord-join-button" class="discord-btn" target="_blank" rel="noopener noreferrer nofollow">Join Now</a>
+          </div>
+          <ul id="discord-members-list" class="members-list">
+              <li class="member-skeleton"><div class="avatar-skeleton"></div><div class="name-skeleton"></div></li>
+              <li class="member-skeleton"><div class="avatar-skeleton"></div><div class="name-skeleton"></div></li>
+              <li class="member-skeleton"><div class="avatar-skeleton"></div><div class="name-skeleton"></div></li>
+              <li class="member-skeleton"><div class="avatar-skeleton"></div><div class="name-skeleton"></div></li>
+              <li class="member-skeleton"><div class="avatar-skeleton"></div><div class="name-skeleton"></div></li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <footer>
+    <div class="disclaimer-box"><h3>Disclaimer</h3><p>We do not host or own any media content... <a href="/Disclaimer/">Learn More!</a></p></div>
+    <ul class="footer-menu"><li><a href="/">Home</a></li><li><a href="/About/">About</a></li><li><a href="/Terms/">Terms</a></li><li><a href="/Privacy/">Privacy</a></li><li><a href="/Disclaimer/">Disclaimer</a></li><li><a href="/DMCA/">DMCA</a></li><li><a href="/Contact/">Contact Us</a></li></ul>
+    <p>© 2025 Streameast V2. All rights reserved.</p>
+  </footer>
+
+  <div id="sticky-footer-ad">
+    <div class="ad-content">
+        <span class="emoji">📲</span>
+        <span class="cta-text">Get the App!</span>
+        <a href="https://tinyurl.com/methstreamsapp" class="download-btn" rel="nofollow" target="_blank">⬇ Download</a>
+    </div>
+    <span id="close-ad">&#10060;</span>
+  </div>
+
+  <script src="script.js" defer></script>
+  <script src="/mobiledetectscript.js" defer></script>
+  <script>
+    let isGaLoaded = false;
+    const gaTimeout = setTimeout(loadGoogleAnalytics, 3000);
+    const interactionEvents = ['scroll', 'mousemove', 'mousedown', 'touchstart', 'keydown'];
+    interactionEvents.forEach(e => document.addEventListener(e, loadGoogleAnalytics, { once: true }));
+    function loadGoogleAnalytics() {
+      if (isGaLoaded) return;
+      isGaLoaded = true;
+      clearTimeout(gaTimeout);
+      interactionEvents.forEach(e => document.removeEventListener(e, loadGoogleAnalytics));
+      const script = document.createElement('script');
+      script.async = true;
+      script.src = 'https://www.googletagmanager.com/gtag/js?id=YOUR_GA_ID_HERE';
+      document.head.appendChild(script);
+    }
+  </script>
+</body>
+</html>
