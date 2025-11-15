@@ -11,6 +11,10 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
   <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <!-- Link to the Web App Manifest -->
+    <link rel="manifest" href="manifest.json">
+	<!-- Theme color for Chrome on Android -->
+    <meta name="theme-color" content="#0078ff">
   
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 
@@ -87,6 +91,19 @@
   </div>
 
   <script src="script.js" defer></script>
+  <script src="bookmark-prompt.js" defer></script>
+  <script defer>
+      // Register the service worker
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('sw.js').then(registration => {
+            console.log('ServiceWorker registration successful with scope: ', registration.scope);
+          }, err => {
+            console.log('ServiceWorker registration failed: ', err);
+          });
+        });
+      }
+    </script>
 
   <script>
     let isGaLoaded = false;
