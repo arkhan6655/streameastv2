@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
     
-    let menuHTML = `<li class="menu-item"><a href="/" class="active">Home</a></li><li class="menu-item schedule-item"><a href="/schedule/">Schedule</a></li>`;
+    let menuHTML = `<li class="menu-item schedule-item"><a href="/schedule/">Schedule</a></li>`;
     menuItems.forEach(item => {
       menuHTML += `<li class="menu-item"><a href="/Schedule/#/${encodeURIComponent(item)}">${item}</a></li>`;
     });
