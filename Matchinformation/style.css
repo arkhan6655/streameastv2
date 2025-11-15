@@ -43,19 +43,31 @@ main {
 
 /* ====== SHARED HEADER & FOOTER ====== */
 .site-title-section { text-align: center; padding: 12px 10px; background: var(--bg-primary); border-bottom: 2px solid var(--accent-red); }
-.site-title-section p { font-family: var(--font-primary); font-size: 24px; font-weight: 700; margin: 0; color: var(--text-primary); }
-header.main-header { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); padding: 8px 10px; display: flex; justify-content: center; border-bottom: 1px solid var(--border-color); }
-header.main-header.sticky { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+.site-title-section p { font-family: var(--font-primary); font-size: 22px; font-weight: 700; margin: 0; color: var(--text-primary); }
+header.main-header {   background: #ffffffc2;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 8px 10px; 
+  display: flex; 
+  justify-content: center; 
+  border-bottom: 1px solid var(--border-color);  }
+header.main-header.sticky {   position: fixed; top: 0; left: 0; right: 0; z-index: 1000; 
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1); 
+  border-bottom: 1px solid var(--border-color); }
 .nav-menu { width: 100%; max-width: 1200px; display: flex; gap: 8px; list-style: none; margin: 0; padding: 0; justify-content: center; align-items: center; }
 .nav-menu li {display: flex; align-items: center;}
 .nav-menu li.menu-item { flex-shrink: 1; }
-.nav-menu li a { font-family: var(--font-primary); text-align: center; color: var(--text-secondary); text-decoration: none; font-weight: 500; padding: 6px 15px; border-radius: 6px; white-space: nowrap; transition: color 0.2s ease; }
-.nav-menu li a:hover, .nav-menu li a.active { color: var(--accent-red); }
+.nav-menu li a { font-family: var(--font-primary);
+  text-align: center; color: var(--accent-red); text-decoration: none; font-weight: 500; 
+  padding: 6px 15px; border-radius: 6px; white-space: nowrap; transition: color 0.2s ease, background-color 0.2s ease; }
+.nav-menu li a:hover { background-color: var(--accent-red);
+  color: var(--bg-primary); }
 .nav-menu li:not(:last-child)::after {content: '|';color: var(--border-color); font-weight: 300;}
 footer { background: var(--bg-secondary); text-align: center; padding: 1.5rem; margin-top: 2rem; border-top: 1px solid var(--border-color); }
 .footer-menu { list-style: none; padding: 0; margin-bottom: 10px; display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; }
-.footer-menu a { color: var(--text-secondary); text-decoration: none; font-size: 14px; }
+.footer-menu a { font-family: var(--font-primary); color: var(--accent-red); text-decoration: none; font-size: 14px; }
 .disclaimer-box { background: var(--bg-primary); color: var(--text-secondary); padding: 15px 20px; border: 1px solid var(--border-color); border-radius: 8px; max-width: 900px; margin: 0 auto 20px; text-align: left; }
+.disclaimer-box h3 {font-family: var(--font-primary);}
 footer p { padding-bottom: 70px; color: var(--text-secondary); }
 
 /* ====== PAGE-SPECIFIC HEADER ====== */
@@ -77,7 +89,7 @@ footer p { padding-bottom: 70px; color: var(--text-secondary); }
 /* ====== STREAM LINKS LIST ====== */
 .stream-header { margin-bottom: 1.5rem; padding-bottom: 10px; border-bottom: 1px solid var(--border-color); }
 .stream-header h2 { font-family: var(--font-primary); margin: 0; font-size: 1.4rem; color: var(--text-primary); }
-.stream-header p { margin: 8px 0 0 0; display: inline-block; background: var(--bg-secondary); color: var(--text-primary); font-weight: bold; padding: 5px 12px; border-radius: 10px; font-size: 0.9rem; border: 1px solid var(--border-color); }
+.stream-header p { margin: 8px 0 0 0; display: inline-block; background: var(--accent-red); color: var(--bg-primary); font-weight: bold; padding: 5px 12px; border-radius: 10px; font-size: 0.9rem; border: 1px solid var(--border-color); }
 .stream-links-grid { display: grid; gap: 1rem; }
 .stream-link { display: flex; align-items: center; background: var(--bg-primary); border-radius: 10px; text-decoration: none; position: relative; border: 1px solid var(--border-color); transition: all 0.3s ease; }
 .stream-link:hover { border-color: var(--accent-red); transform: translateY(-3px); box-shadow: 0 5px 15px rgba(210, 4, 45, 0.1); }
