@@ -41,10 +41,29 @@
   </header>
 
   <main>
+    <div class="ad-placeholder ad-placeholder-horizontal-top">
+      <span>728x90 Advertisement</span>
+    </div>
+
     <section class="page-header">
-      <h1 id="page-heading">Streameast V2 Match Live Streaming Links</h1>
-      <p id="page-description">To watch match streams, scroll down and choose a stream link of your choice. If no links appear, the event may not be live yet.</p>
+      <div class="header-content-wrapper">
+        <div class="ad-placeholder ad-placeholder-300x250 ad-left">
+          <span>300x250 Advertisement</span>
+        </div>
+        <div class="header-text-content">
+          <h1 id="page-heading">Streameast V2 Match Live Streaming Links</h1>
+          <p id="page-description">To watch match streams, scroll down and choose a stream link of your choice. If no links appear, the event may not be live yet.</p>
+        </div>
+        <div class="ad-placeholder ad-placeholder-300x250 ad-right">
+          <span>300x250 Advertisement</span>
+        </div>
+      </div>
     </section>
+
+    <!-- Mobile-Only Ad After Header -->
+    <div class="ad-placeholder ad-placeholder-300x250 ad-placeholder-mobile-only">
+      <span>300x250 Advertisement</span>
+    </div>
 
     <div class="content-wrapper">
       <div class="stream-container">
@@ -70,6 +89,10 @@
         </div>
         
         <div id="stream-links-grid" class="stream-links-grid" style="display: none;"></div>
+
+        <div class="ad-placeholder ad-placeholder-horizontal-bottom">
+          <span>728x90 Advertisement</span>
+        </div>
       </div>
 
       <aside class="discord-sidebar">
@@ -90,6 +113,11 @@
           </ul>
         </div>
       </aside>
+
+      <!-- Mobile-Only Ad After Discord -->
+      <div class="ad-placeholder ad-placeholder-300x250 ad-placeholder-mobile-only">
+        <span>300x250 Advertisement</span>
+      </div>
     </div>
   </main>
 
@@ -99,13 +127,24 @@
     <p>© 2025 Streameast V2. All rights reserved.</p>
   </footer>
 
+  <!-- Mobile-Only App Download Ad -->
   <div id="sticky-footer-ad">
     <div class="ad-content">
         <span class="emoji">📲</span>
         <span class="cta-text">Get the App!</span>
         <a href="https://tinyurl.com/methstreamsapp" class="download-btn" rel="nofollow" target="_blank">⬇ Download</a>
     </div>
-    <span id="close-ad">&#10060;</span>
+    <span id="close-ad" class="close-ad-btn">&#10060;</span>
+  </div>
+
+  <!-- Desktop-Only Sticky Ad -->
+  <div id="desktop-sticky-ad">
+    <div class="ad-content">
+        <span class="emoji">⭐</span>
+        <span class="cta-text">Your Premier Destination for HD Sports Streams!</span>
+        <a href="#" class="download-btn" target="_blank" rel="nofollow">Explore More</a>
+    </div>
+    <span id="close-desktop-ad" class="close-ad-btn">&#10060;</span>
   </div>
 
   <script src="script.js" defer></script>
