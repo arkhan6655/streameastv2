@@ -102,7 +102,6 @@ document.addEventListener("DOMContentLoaded", () => {
       else if (m.status === 'finished') badge = '<span class="badge finished"></span>';
       
       const row = document.createElement("tr");
-      // This class is no longer needed to style the button, but can be kept for other potential styling
       if (m.status === 'finished') row.classList.add('finished-match');
 
       row.innerHTML = `
@@ -141,15 +140,19 @@ document.addEventListener("DOMContentLoaded", () => {
   async function initializePage() {
     try {
       const response = await fetch(API_URL);
-      if (!response.ok) throw new Error('API request failed');
+      if (!response.ok) throw new Error(`API request failed with status ${response.status}`);
       const data = await response.json();
       
+      if (!data || !data.events) throw new Error("Invalid API response format");
+
       const now = Math.floor(Date.now() / 1000);
       const sports = new Set();
       const tempMenuData = {};
 
       for (const date in data.events) {
-        data.events[date].forEach((event, idx) => {
+        const eventsForDay = Array.isArray(data.events[date]) ? data.events[date] : [data.events[date]];
+
+        eventsForDay.forEach((event, idx) => {
           const diffMinutes = (now - event.unix_timestamp) / 60;
           const sportName = event.sport ? event.sport.toLowerCase() : '';
 
@@ -161,15 +164,22 @@ document.addEventListener("DOMContentLoaded", () => {
           else if (diffMinutes >= 0 && diffMinutes < 150) status = "live";
           else status = "finished";
 
-          if (event.sport) {
+          if (event.sport && event.match && event.unix_timestamp) {
+            const uniqueString = `${event.unix_timestamp}_${event.sport}_${event.match}`;
+            
+            // **THIS IS THE CORRECTED LINE**
+            // This safely handles special characters before encoding
+            const uniqueId = btoa(unescape(encodeURIComponent(uniqueString)));
+            
             allMatches.push({
-              time: formatTime(event.unix_timestamp),
-              sport: event.sport,
-              tournament: event.tournament || "-",
-              match: event.match || "-",
-              status,
-              url: `/Matchinformation/?id=${event.unix_timestamp}_${idx}`
+                time: formatTime(event.unix_timestamp),
+                sport: event.sport,
+                tournament: event.tournament || "-",
+                match: event.match || "-",
+                status,
+                url: `/Matchinformation/?id=${uniqueId}`
             });
+            
             sports.add(event.sport);
             
             if (!tempMenuData[event.sport]) tempMenuData[event.sport] = { liveCount: 0, name: event.sport };
@@ -188,7 +198,6 @@ document.addEventListener("DOMContentLoaded", () => {
       window.addEventListener("hashchange", handleHashChange);
       window.addEventListener('resize', generateNavMenu);
       window.addEventListener('scroll', handleStickyMenu);
-
       handleHashChange();
       generateNavMenu();
 
@@ -198,7 +207,7 @@ document.addEventListener("DOMContentLoaded", () => {
     } catch (err) {
       console.error("Failed to load match data:", err);
       tablePlaceholder.style.display = "none";
-      matchesTable.innerHTML = `<tr><td colspan="5" style="color:red;">⚠ Error loading matches.</td></tr>`;
+      matchesTable.innerHTML = `<tr><td colspan="5" style="color:red; text-align:center;">⚠ Error loading matches. The API might be temporarily unavailable or contain invalid characters.</td></tr>`;
       matchesTable.style.display = "table";
     }
   }
@@ -206,5 +215,3 @@ document.addEventListener("DOMContentLoaded", () => {
   initializePage();
 
 });
-
-
