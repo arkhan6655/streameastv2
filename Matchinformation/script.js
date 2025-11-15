@@ -13,7 +13,12 @@ document.addEventListener("DOMContentLoaded", () => {
         placeholderGrid = document.getElementById("stream-links-placeholder"),
         realGrid = document.getElementById("stream-links-grid"),
         stickyMenu = document.getElementById('sticky-menu'),
-        mainContent = document.querySelector('main');
+        mainContent = document.querySelector('main'),
+        // Ad Elements
+        closeAdBtn = document.getElementById("close-ad"),
+        stickyAd = document.getElementById("sticky-footer-ad"),
+        closeDesktopAdBtn = document.getElementById("close-desktop-ad"),
+        desktopStickyAd = document.getElementById("desktop-sticky-ad");
 
   let countdownInterval;
   let menuData = null;
@@ -157,8 +162,23 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  // --- AD EVENT LISTENERS ---
+  function setupAdEventListeners() {
+    if (closeAdBtn && stickyAd) {
+      closeAdBtn.addEventListener("click", () => { 
+        stickyAd.style.display = "none"; 
+      });
+    }
+    if (closeDesktopAdBtn && desktopStickyAd) {
+      closeDesktopAdBtn.addEventListener("click", () => {
+        desktopStickyAd.style.display = "none";
+      });
+    }
+  }
+
   // --- INITIALIZATION ---
   async function initializePage() {
+    setupAdEventListeners(); // Set up event listeners for ads first
     try {
       const params = new URLSearchParams(window.location.search);
       const matchIdFromUrl = params.get('id');
@@ -233,4 +253,3 @@ document.addEventListener("DOMContentLoaded", () => {
   window.addEventListener('resize', generateNavMenu);
   initializePage();
 });
-
