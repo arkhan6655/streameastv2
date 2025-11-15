@@ -13,6 +13,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const mainContent = document.querySelector('main');
   const stickyPos = stickyMenu.offsetTop;
 
+  // Ad Elements
+  const closeAdBtn = document.getElementById("close-ad"),
+        stickyAd = document.getElementById("sticky-footer-ad"),
+        closeDesktopAdBtn = document.getElementById("close-desktop-ad"),
+        desktopStickyAd = document.getElementById("desktop-sticky-ad");
+
   let sportsData = null;
 
   function handleStickyMenu() {
@@ -52,7 +58,22 @@ document.addEventListener("DOMContentLoaded", () => {
     navMenu.innerHTML = menuHTML;
   }
 
+  function setupAdEventListeners() {
+    if (closeAdBtn && stickyAd) {
+      closeAdBtn.addEventListener("click", () => { 
+        stickyAd.style.display = "none"; 
+      });
+    }
+    if (closeDesktopAdBtn && desktopStickyAd) {
+      closeDesktopAdBtn.addEventListener("click", () => {
+        desktopStickyAd.style.display = "none";
+      });
+    }
+  }
+
   function initializePage() {
+    setupAdEventListeners(); // Set up ad listeners right away
+    
     fetch(apiURL)
       .then(res => res.json())
       .then(data => {
@@ -70,8 +91,6 @@ document.addEventListener("DOMContentLoaded", () => {
               
               const diffMinutes = (now - event.unix_timestamp) / 60;
               
-              // *** THIS IS THE CORRECTED LOGIC ***
-              // It now checks if the match has started (diffMinutes >= 0)
               if (diffMinutes >= 0 && diffMinutes < 150) {
                 categories[sport].liveCount++;
               }
@@ -111,6 +130,3 @@ document.addEventListener("DOMContentLoaded", () => {
   window.addEventListener('resize', generateNavMenu);
   initializePage();
 });
-
-
-
