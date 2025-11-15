@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   const API_URL = "https://topembed.pw/api.php?format=json";
   // IMPORTANT: Make sure this is the correct URL for your final streaming page.
-  const STREAM_PAGE_URL = "/stream/"; // Example: /stream/ or https://yoursite.com/streampage/
+  const STREAM_PAGE_URL = "https://raaj648.github.io/newstreampage/"; // Example: /stream/ or https://yoursite.com/streampage/
   const DISCORD_SERVER_ID = "1422384816472457288"; // Replace with your server ID if you have one
 
   const pageTitle = document.getElementById("page-title"),
@@ -233,3 +233,4 @@ document.addEventListener("DOMContentLoaded", () => {
   window.addEventListener('resize', generateNavMenu);
   initializePage();
 });
+
