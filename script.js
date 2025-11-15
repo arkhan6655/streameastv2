@@ -14,10 +14,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const stickyPos = stickyMenu.offsetTop;
 
   // Ad Elements
-  const closeAdBtn = document.getElementById("close-ad"),
-        stickyAd = document.getElementById("sticky-footer-ad"),
-        closeDesktopAdBtn = document.getElementById("close-desktop-ad"),
-        desktopStickyAd = document.getElementById("desktop-sticky-ad");
+  const closeAdBtn = document.getElementById("close-ad");
+  const stickyAd = document.getElementById("sticky-footer-ad");
+  const closeDesktopAdBtn = document.getElementById("close-desktop-ad");
+  const desktopStickyAd = document.getElementById("desktop-sticky-ad");
 
   let sportsData = null;
 
@@ -35,25 +35,25 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!sportsData) return;
     const isMobile = window.matchMedia("(max-width: 768px)").matches;
     const maxDynamicItems = isMobile ? 3 : 8;
-    let menuItems = [];
-    const addedSports = new Set();
-    
+    const menuItems = new Set();
+
+    // Add live sports first
     sportsData.sortedByLive.forEach(cat => {
-      if (cat.liveCount > 0 && menuItems.length < maxDynamicItems) {
-        menuItems.push(cat.name);
-        addedSports.add(cat.name);
+      if (cat.liveCount > 0 && menuItems.size < maxDynamicItems) {
+        menuItems.add(cat.name);
       }
     });
     
+    // Fill remaining space with priority sports
     prioritySports.forEach(sport => {
-      if (!addedSports.has(sport) && menuItems.length < maxDynamicItems) {
-        menuItems.push(sport);
+      if (menuItems.size < maxDynamicItems) {
+        menuItems.add(sport);
       }
     });
     
     let menuHTML = `<li class="menu-item schedule-item"><a href="/schedule/">Schedule</a></li>`;
     menuItems.forEach(item => {
-      menuHTML += `<li class="menu-item"><a href="/Schedule/#/${encodeURIComponent(item)}">${item}</a></li>`;
+      menuHTML += `<li class="menu-item"><a href="/schedule/#/${encodeURIComponent(item)}">${item}</a></li>`;
     });
     navMenu.innerHTML = menuHTML;
   }
@@ -70,17 +70,31 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
   }
+  
+  function generatePlaceholders(count = 20) {
+      for (let i = 0; i < count; i++) {
+          const placeholder = document.createElement('div');
+          placeholder.className = 'placeholder-card';
+          categoriesPlaceholder.appendChild(placeholder);
+      }
+  }
 
   function initializePage() {
-    setupAdEventListeners(); // Set up ad listeners right away
-    
+    setupAdEventListeners();
+    generatePlaceholders();
+
     fetch(apiURL)
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        return res.json();
+      })
       .then(data => {
         const now = Math.floor(Date.now() / 1000);
         const categories = {};
 
-        if (data.events) {
+        if (data && data.events) {
           for (const date in data.events) {
             data.events[date].forEach(event => {
               const sport = event.sport;
@@ -101,14 +115,26 @@ document.addEventListener("DOMContentLoaded", () => {
         sportsData = { sortedByLive: Object.values(categories).sort((a, b) => b.liveCount - a.liveCount) };
         generateNavMenu();
 
+        // Clear the grid before adding new elements
         categoriesGrid.innerHTML = ""; 
         if (sportsData.sortedByLive.length > 0) {
           sportsData.sortedByLive.forEach(category => {
             const categoryCard = document.createElement("a");
-            categoryCard.href = `/Schedule/#/${encodeURIComponent(category.name)}`;
+            categoryCard.href = `/schedule/#/${encodeURIComponent(category.name)}`;
             categoryCard.className = "category-card";
-            let liveBadge = (category.liveCount > 0) ? `<span class="live-badge">${category.liveCount} Live</span>` : '';
-            categoryCard.innerHTML = `<span class="category-name">${category.name}</span>${liveBadge}`;
+
+            const categoryName = document.createElement("span");
+            categoryName.className = "category-name";
+            categoryName.textContent = category.name;
+            categoryCard.appendChild(categoryName);
+
+            if (category.liveCount > 0) {
+                const liveBadge = document.createElement("span");
+                liveBadge.className = "live-badge";
+                liveBadge.textContent = `${category.liveCount} Live`;
+                categoryCard.appendChild(liveBadge);
+            }
+            
             categoriesGrid.appendChild(categoryCard);
           });
         } else {
@@ -122,7 +148,7 @@ document.addEventListener("DOMContentLoaded", () => {
       .catch(err => {
         categoriesPlaceholder.style.display = 'none';
         categoriesSection.innerHTML = `<p style="color:red; text-align: center;">⚠ Error loading content. Please try again later.</p>`;
-        console.error(err);
+        console.error("Failed to fetch or process sports data:", err);
       });
   }
 
