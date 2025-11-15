@@ -29,7 +29,7 @@ main { transition: padding-top 0.2s ease-out; }
 }
 .site-title-section p { 
   font-family: var(--font-primary);
-  font-size: 24px; 
+  font-size: 22px; 
   font-weight: 700; 
   margin: 0; 
   color: var(--text-primary);
@@ -57,6 +57,7 @@ header.main-header.sticky {
   font-family: var(--font-primary);
   text-align: center; color: var(--text-secondary); text-decoration: none; font-weight: 500; 
   padding: 6px 15px; border-radius: 6px; white-space: nowrap; transition: color 0.2s ease;
+color: var(--accent-red);
 }
 .nav-menu li a:hover, .nav-menu li a.active { 
   color: var(--accent-red);
@@ -66,7 +67,7 @@ header.main-header.sticky {
 /* ====== HERO SECTION ====== */
 .hero-section { 
   text-align: center; 
-  padding: 60px 20px 40px 20px; 
+  padding: 20px 20px 40px 20px; 
   background: var(--bg-secondary);
   border-bottom: 1px solid var(--border-color);
 }
@@ -157,11 +158,15 @@ footer p { padding-bottom: 70px; color: var(--text-secondary); }
   .site-title-section h1 { font-size: 20px; }
   .nav-menu { gap: 4px; }
   .nav-menu li.menu-item { flex-grow: 1; flex-basis: 0; }
-  .nav-menu li a { font-size: 13px; padding: 8px 4px; overflow: hidden; text-overflow: ellipsis; }
-  .hero-section h2 { font-size: 2rem; }
+  .nav-menu li a { font-size: 13px; padding: 8px 2px; overflow: hidden; text-overflow: ellipsis; }
+  .hero-section h1 { font-size: 1.5rem; }
   .categories-grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
   .category-name { font-size: 1.1rem; }
   .live-badge { font-size: 0.7rem; padding: 3px 6px; top: 8px; right: 8px; }
   #sticky-footer-ad { display: flex; }
   #desktop-sticky-ad { display: none; }
+  .nav-menu li:not(:last-child)::after {
+	  font-size: 11px;
+	  
+  }
 }
