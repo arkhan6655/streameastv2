@@ -12,7 +12,12 @@ document.addEventListener("DOMContentLoaded", () => {
         matchesTable = document.getElementById("matches-table"),
         matchesBody = document.getElementById("matches-body"),
         stickyMenu = document.getElementById('sticky-menu'),
-        mainContent = document.querySelector('main');
+        mainContent = document.querySelector('main'),
+        // Ad Elements
+        closeAdBtn = document.getElementById("close-ad"),
+        stickyAd = document.getElementById("sticky-footer-ad"),
+        closeDesktopAdBtn = document.getElementById("close-desktop-ad"),
+        desktopStickyAd = document.getElementById("desktop-sticky-ad");
 
   let allMatches = [];
   let state = { sport: "all", status: "all" };
@@ -80,6 +85,17 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  function createAdRow() {
+    const adRow = document.createElement("tr");
+    adRow.className = "ad-row";
+    adRow.innerHTML = `<td colspan="5">
+      <div class="ad-placeholder ad-placeholder-table">
+        <span>728x90 Advertisement</span>
+      </div>
+    </td>`;
+    return adRow;
+  }
+
   function renderFilteredMatches() {
     let filtered = allMatches;
     if (state.sport !== "all") {
@@ -90,13 +106,21 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     matchesBody.innerHTML = "";
+    
     if (filtered.length === 0) {
-      matchesBody.innerHTML = `<tr><td colspan="5">⚠ No matches found for this filter.</td></tr>`;
+      matchesBody.appendChild(createAdRow());
+      const noMatchRow = document.createElement('tr');
+      noMatchRow.innerHTML = `<tr><td colspan="5">⚠ No matches found for this filter.</td></tr>`;
+      matchesBody.appendChild(noMatchRow);
       return;
     }
     
     const fragment = document.createDocumentFragment();
+    let matchRowCount = 0;
+
     filtered.forEach(m => {
+      matchRowCount++;
+      
       let badge = '';
       if (m.status === 'live') badge = '<span class="badge live"></span>';
       else if (m.status === 'finished') badge = '<span class="badge finished"></span>';
@@ -111,6 +135,11 @@ document.addEventListener("DOMContentLoaded", () => {
         <td>${m.match} ${badge}</td>
         <td><a class="watch-btn" href="${m.url}">Watch</a></td>`;
       fragment.appendChild(row);
+
+      // Ad injection logic
+      if (matchRowCount === 3 || (matchRowCount > 3 && (matchRowCount - 3) % 7 === 0)) {
+        fragment.appendChild(createAdRow());
+      }
     });
     matchesBody.appendChild(fragment);
   }
@@ -137,7 +166,21 @@ document.addEventListener("DOMContentLoaded", () => {
     liveCountSpan.textContent = liveMatches.length;
   }
 
+  function setupAdEventListeners() {
+    if (closeAdBtn && stickyAd) {
+      closeAdBtn.addEventListener("click", () => { 
+        stickyAd.style.display = "none"; 
+      });
+    }
+    if (closeDesktopAdBtn && desktopStickyAd) {
+      closeDesktopAdBtn.addEventListener("click", () => {
+        desktopStickyAd.style.display = "none";
+      });
+    }
+  }
+
   async function initializePage() {
+    setupAdEventListeners();
     try {
       const response = await fetch(API_URL);
       if (!response.ok) throw new Error(`API request failed with status ${response.status}`);
@@ -166,9 +209,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
           if (event.sport && event.match && event.unix_timestamp) {
             const uniqueString = `${event.unix_timestamp}_${event.sport}_${event.match}`;
-            
-            // **THIS IS THE CORRECTED LINE**
-            // This safely handles special characters before encoding
             const uniqueId = btoa(unescape(encodeURIComponent(uniqueString)));
             
             allMatches.push({
@@ -213,5 +253,4 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   initializePage();
-
 });
