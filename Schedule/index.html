@@ -31,10 +31,8 @@
   
   <div class="site-title-section"><h1>Streameast V2</h1></div>
 
-  <!-- Header updated with a static placeholder menu -->
   <header id="sticky-menu" class="main-header">
     <ul id="nav-menu" class="nav-menu">
-      <!-- Static placeholder menu for CLS prevention. JS will replace this content. -->
       <li class="menu-item"><a href="/" class="active">Home</a></li>
       <li class="menu-item"><a href="#">Football</a></li>
       <li class="menu-item"><a href="#">Basketball</a></li>
@@ -44,10 +42,28 @@
   </header>
 
   <main>
+    <div class="ad-placeholder ad-placeholder-horizontal-top">
+        <span>728x90 Advertisement</span>
+    </div>
+
     <section class="page-header">
-      <h1 id="page-heading">Streameast V2 Full Sports Schedule</h1>
-      <p id="page-description">See the full sports schedule on streameast V2 and find your favorite match.</p>
+        <div class="header-content-wrapper">
+            <div class="ad-placeholder ad-placeholder-300x250 ad-left">
+                <span>300x250 Advertisement</span>
+            </div>
+            <div class="header-text-content">
+                <h1 id="page-heading">Streameast V2 Full Sports Schedule</h1>
+                <p id="page-description">See the full sports schedule on streameast V2 and find your favorite match.</p>
+            </div>
+            <div class="ad-placeholder ad-placeholder-300x250 ad-right">
+                <span>300x250 Advertisement</span>
+            </div>
+        </div>
     </section>
+
+    <div class="ad-placeholder ad-placeholder-300x250 ad-mobile-only">
+        <span>300x250 Advertisement</span>
+    </div>
 
     <section class="filter-controls">
       <div class="status-filters">
@@ -75,6 +91,13 @@
         <tbody id="matches-body"></tbody>
       </table>
     </div>
+
+    <div class="ad-placeholder ad-placeholder-horizontal-bottom">
+        <span>728x90 Advertisement</span>
+    </div>
+    <div class="ad-placeholder ad-placeholder-300x250 ad-mobile-only">
+        <span>300x250 Advertisement</span>
+    </div>
   </main>
 
   <footer>
@@ -89,7 +112,16 @@
         <span class="cta-text">Get the App!</span>
         <a href="https://tinyurl.com/methstreamsapp" class="download-btn" rel="nofollow" target="_blank">⬇ Download</a>
     </div>
-    <span id="close-ad">&#10060;</span>
+    <span id="close-ad" class="close-ad-btn">&#10060;</span>
+  </div>
+
+  <div id="desktop-sticky-ad">
+    <div class="ad-content">
+        <span class="emoji">⭐</span>
+        <span class="cta-text">Your Premier Destination for HD Sports Streams!</span>
+        <a href="#" class="download-btn" target="_blank" rel="nofollow">Explore More</a>
+    </div>
+    <span id="close-desktop-ad" class="close-ad-btn">&#10060;</span>
   </div>
 
   <script src="script.js" defer></script>
@@ -113,6 +145,4 @@
   </script>
 
 </body>
-
 </html>
-
