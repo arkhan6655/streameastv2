@@ -16,7 +16,7 @@ header.main-header.sticky { position: fixed; top: 0; left: 0; right: 0; z-index:
 .nav-menu li a:hover { background: #ff4747; color: #fff; }
 .nav-menu li:not(:last-child)::after {content: '|';color: #444; font-weight: 300;}
 /* ====== HERO SECTION ====== */
-.hero-section { text-align: center; padding: 40px 20px 20px 20px; background: #1a1a1a; }
+.hero-section { text-align: center; padding: 20px 20px 20px 20px; background: #1a1a1a; }
 .hero-section h2 { font-size: 2.2rem; margin-bottom: 10px; }
 .hero-section p { font-size: 1.1rem; color: #ccc; margin-bottom: 0; }
 
@@ -32,32 +32,60 @@ header.main-header.sticky { position: fixed; top: 0; left: 0; right: 0; z-index:
 
 /* --- NEW: Placeholder Card Style for CLS Prevention --- */
 .placeholder-card {
-  /* Dimensions MUST match .category-card */
   padding: 25px 15px;
   border-radius: 10px;
-  background-color: #1c1c1c; /* Base color */
-  
-  /* Shimmer Effect */
+  background-color: #1c1c1c;
   background-image: linear-gradient(90deg, #1c1c1c 0px, #2a2a2a 40px, #1c1c1c 80px);
   background-size: 600px;
   animation: shimmer 1.5s infinite linear;
 }
 
-/* --- NEW: Shimmer Animation --- */
-@keyframes shimmer {
-  0% { background-position: -300px 0; }
-  100% { background-position: 300px 0; }
-}
+@keyframes shimmer { 0% { background-position: -300px 0; } 100% { background-position: 300px 0; } }
 
-/* (Schedule Button, Footer, Sticky Ad, and other Keyframes remain the same) */
+/* ====== SCHEDULE BUTTON & FOOTER ====== */
 .schedule-btn-container { text-align: center; margin: 3rem 0 2rem 0; }
 .schedule-btn { display: inline-block; background: #ff6600; color: #fff; font-weight: 700; font-size: 1rem; padding: 12px 25px; border-radius: 8px; text-decoration: none; animation: pulseGlow 2s infinite; }
 footer { background: #222; text-align: center; padding: 1rem; margin-top: 2rem; }
 .footer-menu { list-style: none; padding: 0; display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; }
 .footer-menu a { color: #aaa; text-decoration: none; font-size: 14px; padding: 5px; }
 .disclaimer-box { background: #111; color: #ddd; padding: 15px 20px; border: 1px solid #333; border-radius: 8px; max-width: 900px; margin: 0 auto 20px; text-align: left; }
-#sticky-footer-ad { position: fixed; bottom: 0; left: 0; width: 100%; background: linear-gradient(270deg, #ff5e00, #ff8c00, #ff5e00); background-size: 600% 600%; animation: gradientShift 8s ease infinite; padding: 10px; z-index: 999; display: flex; justify-content: center; align-items: center; box-shadow: 0 -3px 10px rgba(0,0,0,0.4); }
-#close-ad { position: absolute; top: 3px; right: 25px; font-size: 14px; padding: 5px; border-radius: 50%; background: #333; cursor: pointer; }
+footer p { padding-bottom: 60px; } /* Add padding for sticky ad space */
+
+
+/* ====== STICKY FOOTER ADS ====== */
+#sticky-footer-ad, #desktop-sticky-ad {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 10px 50px 10px 10px;
+  z-index: 999;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 -3px 10px rgba(0,0,0,0.4);
+  box-sizing: border-box;
+}
+#sticky-footer-ad {
+  background: linear-gradient(270deg, #ff5e00, #ff8c00, #ff5e00);
+  background-size: 600% 600%;
+  animation: gradientShift 8s ease infinite;
+  display: none; /* Hidden by default */
+}
+#desktop-sticky-ad {
+  background-color: #1a1a2e;
+  border-top: 2px solid #5865F2;
+  color: #fff;
+  display: flex; /* Visible on desktop by default */
+}
+#desktop-sticky-ad .download-btn { background-color: #5865F2; }
+.ad-content { display: flex; align-items: center; gap: 15px; }
+.emoji { font-size: 24px; }
+.cta-text { font-size: 16px; font-weight: bold; }
+.download-btn { background: #111; color: #fff; padding: 8px 20px; border-radius: 25px; font-size: 16px; font-weight: bold; text-decoration: none; }
+.close-ad-btn { position: absolute; top: 50%; right: 15px; transform: translateY(-50%); font-size: 20px; color: #fff; cursor: pointer; padding: 5px; line-height: 1; transition: transform 0.2s ease; }
+.close-ad-btn:hover { transform: translateY(-50%) scale(1.2); }
+
+/* ====== KEYFRAMES ====== */
 @keyframes pulseGlow { 0% { box-shadow: 0 0 0px rgba(255, 102, 0, 0.7); } 50% { box-shadow: 0 0 10px rgba(255, 102, 0, 0.9); } 100% { box-shadow: 0 0 0px rgba(255, 102, 0, 0.7); } }
 @keyframes pulseLive { 0% { box-shadow: 0 0 0 0 rgba(230,0,35,.6); } 70% { box-shadow: 0 0 0 10px rgba(230,0,35,0); } 100% { box-shadow: 0 0 0 0 rgba(230,0,35,0); } }
 @keyframes gradientShift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
@@ -72,5 +100,8 @@ footer { background: #222; text-align: center; padding: 1rem; margin-top: 2rem; 
   .categories-grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
   .category-name { font-size: 1.1rem; }
   .live-badge { font-size: 0.7rem; padding: 3px 6px; top: 8px; right: 8px; }
+  
+  /* Ad Visibility */
+  #sticky-footer-ad { display: flex; }
+  #desktop-sticky-ad { display: none; }
 }
-
