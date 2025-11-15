@@ -1,7 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
   const API_URL = "https://topembed.pw/api.php?format=json";
-  const STREAM_PAGE_URL = "https://your-other-website.com/streampage/";
-  const DISCORD_SERVER_ID = "1422384816472457288"; // Replace with your server ID
+  // IMPORTANT: Make sure this is the correct URL for your final streaming page.
+  const STREAM_PAGE_URL = "/stream/"; // Example: /stream/ or https://yoursite.com/streampage/
+  const DISCORD_SERVER_ID = "1422384816472457288"; // Replace with your server ID if you have one
 
   const pageTitle = document.getElementById("page-title"),
         pageHeading = document.getElementById("page-heading"),
@@ -18,7 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let menuData = null;
   const prioritySports = ["Football", "Basketball", "Baseball", "Tennis", "UFC", "F1"];
 
-  // --- MENU & STICKY HEADER LOGIC ---
+  // --- MENU & STICKY HEADER LOGIC (No changes needed here) ---
   function handleStickyMenu() {
     const stickyPos = stickyMenu.offsetTop;
     if (window.pageYOffset > stickyPos) {
@@ -83,17 +84,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function getChannelName(url, index) {
     const lastPart = url.substring(url.lastIndexOf('/') + 1);
-    const isGeneric = /^(ex)?\d{3,}$/.test(lastPart);
-    if (isGeneric || !lastPart) {
-      return `Channel ${index + 1}`;
-    }
-    return decodeURIComponent(lastPart);
+    // Let's refine this to better handle generic names vs. real channel names
+    const decodedPart = decodeURIComponent(lastPart);
+    const isGeneric = /^(ex)?\d{3,}$/.test(decodedPart) || decodedPart.length < 3;
+    return isGeneric ? `Stream Link ${index + 1}` : decodedPart;
   }
 
-  /**
-   * MODIFIED FUNCTION
-   * Now accepts 'matchId' to build the new URL.
-   */
+  // No change needed in this function. It correctly passes the ID to the next page.
   function renderChannels(channels, matchId) {
     streamCountSpan.textContent = channels.length;
     realGrid.innerHTML = "";
@@ -103,9 +100,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const streamLink = document.createElement("a");
         streamLink.className = "stream-link";
         
-        // --- CHANGE THIS LINE ---
-        // Old: streamLink.href = `${STREAM_PAGE_URL}?stream=${encodeURIComponent(channelUrl)}`;
-        // New URL now includes the unique match ID.
+        // This URL structure correctly passes the stable match ID and the specific channel URL
+        // to your final stream viewing page.
         streamLink.href = `${STREAM_PAGE_URL}?id=${matchId}&stream=${encodeURIComponent(channelUrl)}`;
         
         streamLink.target = "_blank";
@@ -122,7 +118,7 @@ document.addEventListener("DOMContentLoaded", () => {
     realGrid.style.display = "grid";
   }
   
-  // --- DISCORD WIDGET LOGIC ---
+  // --- DISCORD WIDGET LOGIC (No changes needed here) ---
   async function loadDiscordWidget() {
     if (!DISCORD_SERVER_ID) return;
     const apiUrl = `https://discord.com/api/guilds/${DISCORD_SERVER_ID}/widget.json`;
@@ -134,10 +130,8 @@ document.addEventListener("DOMContentLoaded", () => {
       const response = await fetch(apiUrl);
       if (!response.ok) throw new Error('Failed to fetch Discord data');
       const data = await response.json();
-
       if (onlineCountEl) onlineCountEl.textContent = data.presence_count || '0';
       if (joinButton && data.instant_invite) joinButton.href = data.instant_invite;
-      
       if (membersListEl) {
         membersListEl.innerHTML = ''; 
         const fragment = document.createDocumentFragment();
@@ -148,14 +142,12 @@ document.addEventListener("DOMContentLoaded", () => {
             fragment.appendChild(li);
           });
         }
-        
         if (data.instant_invite) {
             const moreLi = document.createElement('li');
             moreLi.className = 'more-members-link';
             moreLi.innerHTML = `<p>and more in our <a href="${data.instant_invite}" target="_blank" rel="noopener noreferrer nofollow">Discord!</a></p>`;
             fragment.appendChild(moreLi);
         }
-        
         membersListEl.appendChild(fragment);
       }
     } catch (error) {
@@ -175,17 +167,32 @@ document.addEventListener("DOMContentLoaded", () => {
       const response = await fetch(API_URL);
       if (!response.ok) throw new Error("API request failed");
       const data = await response.json();
+      if (!data || !data.events) throw new Error("Invalid API response format");
 
       let foundMatch = null;
       const tempMenuData = {};
       const now = Math.floor(Date.now() / 1000);
 
+      // --- MODIFIED LOGIC TO FIND THE MATCH ---
+      // We loop through all events and generate the stable ID for each one,
+      // comparing it to the ID from the URL.
       for (const date in data.events) {
-        for (const [index, event] of data.events[date].entries()) {
-          const constructedId = `${event.unix_timestamp}_${index}`;
-          if (constructedId === matchIdFromUrl) {
-            foundMatch = event;
+        const eventsForDay = Array.isArray(data.events[date]) ? data.events[date] : [data.events[date]];
+
+        for (const event of eventsForDay) {
+          // Match finding logic
+          if (!foundMatch && event.sport && event.match && event.unix_timestamp) {
+            const uniqueString = `${event.unix_timestamp}_${event.sport}_${event.match}`;
+            // IMPORTANT: We must encode it in the EXACT same way as on the schedule page
+            const uniqueId = btoa(unescape(encodeURIComponent(uniqueString)));
+            
+            if (uniqueId === matchIdFromUrl) {
+              foundMatch = event;
+              // We don't 'break' here, so the loop continues to build the full menu data
+            }
           }
+          
+          // Menu building logic (runs for every event to get accurate live counts)
           if (event.sport) {
             const diffMinutes = (now - event.unix_timestamp) / 60;
             const isLive = diffMinutes >= 0 && diffMinutes < 150;
@@ -194,6 +201,7 @@ document.addEventListener("DOMContentLoaded", () => {
           }
         }
       }
+      // --- END OF MODIFIED LOGIC ---
 
       menuData = Object.values(tempMenuData).sort((a, b) => b.liveCount - a.liveCount);
       generateNavMenu();
@@ -201,11 +209,10 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!foundMatch) throw new Error("Match not found in the API data.");
 
       updatePageMeta(foundMatch);
-      const channelUrls = (foundMatch.channels || []).map(c => typeof c === 'object' ? c.channel : c).filter(Boolean);
+      // The 'channels' value can be an array of strings or an array of objects. This handles both.
+      const channelUrls = (foundMatch.channels.channel || foundMatch.channels || []).map(c => typeof c === 'object' ? c.channel : c).filter(Boolean);
       
-      // --- CHANGE THIS LINE ---
-      // Old: renderChannels(channelUrls);
-      // New call now passes the match ID to the function.
+      // We pass the original 'matchIdFromUrl' so the next page gets the stable ID too.
       renderChannels(channelUrls, matchIdFromUrl);
 
       if (foundMatch.unix_timestamp > now) {
