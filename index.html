@@ -7,10 +7,13 @@
   
   <link rel="preconnect" href="https://topembed.pw">
   <link rel="preconnect" href="https://www.googletagmanager.com">
-  <link rel="preconnect" href="https://www.google-analytics.com">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
   <link rel="icon" href="/favicon.ico" type="image/x-icon">
   
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+
   <style>
     body{margin:0;font-family:Arial,sans-serif;line-height:1.5;background:#111;color:#fff}.site-title-section{text-align:center;padding:12px 10px;background:#111;border-bottom:1px solid #ff5e00}.site-title-section h1{font-size:20px;font-weight:700;margin:0;color:#fff}header.main-header{background:#111;padding:8px 10px;display:flex;justify-content:center;border-bottom:1px solid #333}.nav-menu{width:100%;max-width:1200px;display:flex;gap:8px;list-style:none;margin:0;padding:0;justify-content:center;align-items:center}.nav-menu li {display: flex; align-items: center;}.nav-menu li.menu-item{flex-shrink:1}.nav-menu li a {text-align: center; color: #ddd; text-decoration: none; font-weight: 500; padding: 6px 15px; border-radius: 6px; white-space: nowrap; transition: all 0.2s ease;}.nav-menu li a:hover { background: #ff4747; color: #fff; }.nav-menu li:not(:last-child)::after {content: '|'; color: #444; font-weight: 300;}.hero-section{text-align:center;padding:40px 20px 20px;background:#1a1a1a}.hero-section h2{font-size:2.2rem;margin-bottom:10px}.hero-section p{font-size:1.1rem;color:#ccc;margin-bottom:0}.categories-container{width:90%;max-width:1200px;margin:2rem auto}.categories-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1.5rem}.placeholder-card{padding:25px 15px;border-radius:10px;background-color:#1c1c1c;background-image:linear-gradient(90deg,#1c1c1c 0,#2a2a2a 40px,#1c1c1c 80px);background-size:600px;animation:1.5s linear infinite shimmer}@keyframes shimmer{0%{background-position:-300px 0}100%{background-position:300px 0}}@media (max-width:768px){.site-title-section h1{font-size:18px}.nav-menu{gap:4px}.nav-menu li.menu-item{flex-grow:1;flex-basis:0}.nav-menu li a{font-size:13px;padding:8px 4px;overflow:hidden;text-overflow:ellipsis}.hero-section h2{font-size:1.8rem}.categories-grid{grid-template-columns:1fr 1fr;gap:1rem}}
   </style>
@@ -18,7 +21,6 @@
   <link rel="preload" href="style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="style.css"></noscript>
 
-  <!-- Google Analytics config is kept, but the script that loads it is now delayed -->
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
@@ -29,7 +31,7 @@
 <body>
   
   <div class="site-title-section">
-    <h1>Streameast V2</h1>
+    <p>Streameast V2</p>
   </div>
 
   <header id="sticky-menu" class="main-header">
@@ -44,7 +46,7 @@
 
   <main>
     <section class="hero-section">
-      <h2>Watch Your Favorite Sports Live</h2>
+      <h1>Watch Your Favorite Sports Live</h1>
       <p>Live streams for NFL, NBA, MLB, UFC, WWE and more. Never miss a game.</p>
     </section>
 
@@ -61,7 +63,7 @@
   </main>
 
   <footer>
-    <div class="disclaimer-box"><h3>Disclaimer</h3><p>We do not host or own any media content; all streams are sourced from third-party sites. We do not take any responsibility for copyright issues. Copyright concerns should be directed to the original host. We have no control over ads in embedded players and receive no revenue from them. <a href="/Disclaimer/">Learn More!</a></p></div>
+    <div class="disclaimer-box"><h3>Disclaimer</h3><p>We do not host or own any media content... <a href="/Disclaimer/">Learn More!</a></p></div>
     <ul class="footer-menu"><li><a href="/">Home</a></li><li><a href="/About/">About</a></li><li><a href="/Terms/">Terms</a></li><li><a href="/Privacy/">Privacy</a></li><li><a href="/Disclaimer/">Disclaimer</a></li><li><a href="/DMCA/">DMCA</a></li><li><a href="/Contact/">Contact Us</a></li></ul>
     <p>© 2025 Streameast V2. All rights reserved.</p>
   </footer>
@@ -89,30 +91,20 @@
   <script src="script.js" defer></script>
   <script src="/mobiledetectscript.js" defer></script>
 
-  <!-- NEW: Delayed Google Analytics Loader Script -->
   <script>
     let isGaLoaded = false;
-    const gaTimeout = setTimeout(loadGoogleAnalytics, 3000); // Fallback timer
+    const gaTimeout = setTimeout(loadGoogleAnalytics, 3000);
     const interactionEvents = ['scroll', 'mousemove', 'mousedown', 'touchstart', 'keydown'];
-
-    // Listen for the first user interaction
     interactionEvents.forEach(event => document.addEventListener(event, loadGoogleAnalytics, { once: true }));
-
     function loadGoogleAnalytics() {
-      if (isGaLoaded) return; // Prevent multiple loads
+      if (isGaLoaded) return;
       isGaLoaded = true;
-      
-      // Clean up triggers to avoid duplicate calls
       clearTimeout(gaTimeout);
       interactionEvents.forEach(event => document.removeEventListener(event, loadGoogleAnalytics));
-
-      // Create and append the Google Analytics script to the head
       const script = document.createElement('script');
       script.async = true;
       script.src = 'https://www.googletagmanager.com/gtag/js?id=G-4VTCY3RX4K';
       document.head.appendChild(script);
-
-      console.log('Google Analytics script loaded on user interaction or timeout.');
     }
   </script>
 
