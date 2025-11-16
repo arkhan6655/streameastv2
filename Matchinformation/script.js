@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let countdownInterval;
   let menuData = null;
-  const prioritySports = ["Football", "Basketball", "Baseball", "Tennis", "UFC", "F1"];
+  const prioritySports = ["Football", "Basketball", "Baseball", "Tennis", "UFC", "Motorsport"];
 
   // --- MENU & STICKY HEADER LOGIC (No changes needed here) ---
   function handleStickyMenu() {
