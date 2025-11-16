@@ -76,8 +76,11 @@ main {
 footer { background: var(--bg-secondary); text-align: center; padding: 1.5rem; margin-top: 2rem; border-top: 1px solid var(--border-color); }
 .footer-menu { list-style: none; padding: 0; margin-bottom: 10px; display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; }
 .footer-menu a { font-family: var(--font-primary); color: var(--accent-red); text-decoration: none; font-size: 14px; }
-.disclaimer-box { background: var(--bg-primary); color: var(--text-secondary); padding: 15px 20px; border: 1px solid var(--border-color); border-radius: 8px; max-width: 900px; margin: 0 auto 20px; text-align: left; }
-.disclaimer-box h3 {font-family: var(--font-primary);}
+.disclaimer-full { background-color: var(--bg-secondary); border-left: 4px solid var(--accent-red); border-radius: 12px; padding: 20px 25px; margin-bottom: 1.5rem; box-shadow: 0 4px 15px rgba(0,0,0,0.05);}
+.disclaimer-full h3 {font-family: var(--font-primary); border-bottom-color: var(--border-color); }
+.disclaimer-full p { padding-bottom: 10px; }
+.disclaimer-full p strong { color: var(--text-primary); }
+.disclaimer-full a {text-decoration: none; color: var(--accent-red);}
 footer p { padding-bottom: 70px; color: var(--text-secondary); }
 
 /* ====== PAGE-SPECIFIC HEADER ====== */
@@ -155,3 +158,4 @@ tr.ad-row td { padding: 8px 0; }
   #sticky-footer-ad { display: flex; }
   #desktop-sticky-ad { display: none; }
 }
+
