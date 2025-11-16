@@ -46,9 +46,9 @@ document.addEventListener("DOMContentLoaded", () => {
       if (menuItems.size < maxDynamicItems) menuItems.add(sport);
     });
     
-    let menuHTML = `<li class="menu-item"><a href="/">Home</a></li><li class="menu-item"><a href="/schedule/">Schedule</a></li>`;
+    let menuHTML = `<li class="menu-item"><a href="/">Home</a></li><li class="menu-item"><a href="/Schedule/">Schedule</a></li>`;
     menuItems.forEach(item => { 
-      menuHTML += `<li class="menu-item"><a href="/schedule/#/${encodeURIComponent(item)}">${item}</a></li>`; 
+      menuHTML += `<li class="menu-item"><a href="/Schedule/#/${encodeURIComponent(item)}">${item}</a></li>`; 
     });
     navMenu.innerHTML = menuHTML;
   }
@@ -104,4 +104,5 @@ document.addEventListener("DOMContentLoaded", () => {
   window.addEventListener('scroll', handleStickyMenu);
   window.addEventListener('resize', generateNavMenu);
   initializePage();
+
 });
