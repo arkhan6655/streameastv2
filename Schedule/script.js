@@ -90,7 +90,7 @@ document.addEventListener("DOMContentLoaded", () => {
     adRow.className = "ad-row";
     adRow.innerHTML = `<td colspan="5">
       <div class="ad-placeholder ad-placeholder-table">
-        <span>728x90 Advertisement</span>
+         <a href="https://amzn.to/3JDrf3v" target="_blank" rel="nofollow noopener sponsored"><img src="/amazon72890.webp"/></a>
       </div>
     </td>`;
     return adRow;
@@ -254,4 +254,5 @@ document.addEventListener("DOMContentLoaded", () => {
 
   initializePage();
 });
+
 
