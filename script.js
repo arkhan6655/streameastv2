@@ -120,7 +120,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (sportsData.sortedByLive.length > 0) {
           sportsData.sortedByLive.forEach(category => {
             const categoryCard = document.createElement("a");
-            categoryCard.href = `/schedule/#/${encodeURIComponent(category.name)}`;
+            categoryCard.href = `/Schedule/#/${encodeURIComponent(category.name)}`;
             categoryCard.className = "category-card";
 
             const categoryName = document.createElement("span");
@@ -156,4 +156,5 @@ document.addEventListener("DOMContentLoaded", () => {
   window.addEventListener('resize', generateNavMenu);
   initializePage();
 });
+
 
