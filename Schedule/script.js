@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let allMatches = [];
   let state = { sport: "all", status: "all" };
   let menuData = null;
-  const prioritySports = ["Football", "Basketball", "Baseball", "Tennis", "UFC", "F1"];
+  const prioritySports = ["Football", "Basketball", "Baseball", "Tennis", "UFC", "Motorsport"];
 
   function handleStickyMenu() {
     const stickyPos = stickyMenu.offsetTop;
