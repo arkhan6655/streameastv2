@@ -163,10 +163,12 @@ footer p { padding-bottom: 70px; color: var(--text-secondary); }
   .stream-link-content { padding: 12px 15px; }
   .watch-now-btn { padding: 6px 14px; font-size: 0.9rem; }
   .ad-placeholder-mobile-only { display: flex; margin: 1.5rem auto; }
+	.ad-placeholder-horizontal-top, .ad-placeholder-horizontal-bottom { display: none; }
   #sticky-footer-ad { display: flex; }
   #desktop-sticky-ad { display: none; }
 }
 @media (max-width: 468px) {
 	.countdown-timer { gap: 1px; }
 }
+
 
