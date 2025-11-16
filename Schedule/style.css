@@ -143,7 +143,7 @@ tr.ad-row td { padding: 8px 0; }
     .ad-placeholder-300x250.ad-left, .ad-placeholder-300x250.ad-right { display: none; }
 }
 @media (max-width: 768px) {
-  .ad-placeholder-horizontal-top, .ad-placeholder-horizontal-bottom, .ad-placeholder-table { display: none; }
+  .ad-placeholder-horizontal-top, .ad-placeholder-horizontal-bottom { display: none; }
   .ad-mobile-only { display: flex; margin: 1.5rem auto; }
   .nav-menu { gap: 4px; }
   .nav-menu li.menu-item { flex-grow: 1; flex-basis: 0; }
@@ -158,5 +158,6 @@ tr.ad-row td { padding: 8px 0; }
   #sticky-footer-ad { display: flex; }
   #desktop-sticky-ad { display: none; }
 }
+
 
 
