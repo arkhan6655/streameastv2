@@ -56,12 +56,14 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!addedSports.has(sport) && menuItems.length < maxDynamicItems) menuItems.push(sport);
     });
     let menuHTML = `<li class="menu-item"><a href="/" class="active">Home</a></li>`;
-    menuItems.forEach(item => { menuHTML += `<li class="menu-item"><a href="/Schedule/#/${item.toLowerCase()}">${item}</a></li>`; });
+    // FIX: Encoded the item for the URL to handle spaces correctly
+    menuItems.forEach(item => { menuHTML += `<li class="menu-item"><a href="/Schedule/#/${encodeURIComponent(item.toLowerCase())}">${item}</a></li>`; });
     navMenu.innerHTML = menuHTML;
   }
   
   function handleHashChange() {
-    const hash = window.location.hash.replace("#/", "").toLowerCase() || "all";
+    // FIX: Decoded the hash to correctly read sport names with spaces
+    const hash = decodeURIComponent(window.location.hash.replace("#/", "").toLowerCase()) || "all";
     state.sport = hash;
     sportSelect.value = state.sport;
     updateUI();
@@ -254,5 +256,3 @@ document.addEventListener("DOMContentLoaded", () => {
 
   initializePage();
 });
-
-
