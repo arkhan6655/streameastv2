@@ -135,8 +135,12 @@ main { transition: padding-top 0.2s ease-out; }
 footer { background: var(--bg-secondary); text-align: center; padding: 1.5rem; margin-top: 2rem; border-top: 1px solid var(--border-color); }
 .footer-menu { list-style: none; padding: 0; display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; }
 .footer-menu a {font-family: var(--font-primary); color: var(--accent-red); text-decoration: none; font-size: 14px; padding: 5px; }
-.disclaimer-box { background: var(--bg-primary); color: var(--text-secondary); padding: 15px 20px; border: 1px solid var(--border-color); border-radius: 8px; max-width: 900px; margin: 0 auto 20px; text-align: left; }
-.disclaimer-box h3 {font-family: var(--font-primary);}
+
+.disclaimer-full { background-color: var(--bg-secondary); border-left: 4px solid var(--accent-red); border-radius: 12px; padding: 20px 25px; margin-bottom: 1.5rem; box-shadow: 0 4px 15px rgba(0,0,0,0.05);}
+.disclaimer-full h3 {font-family: var(--font-primary); border-bottom-color: var(--border-color); }
+.disclaimer-full p { padding-bottom: 10px; }
+.disclaimer-full p strong { color: var(--text-primary); }
+.disclaimer-full a {text-decoration: none; color: var(--accent-red);}
 footer p { padding-bottom: 70px; color: var(--text-secondary); }
 
 /* ====== STICKY FOOTER ADS ====== */
@@ -170,5 +174,115 @@ footer p { padding-bottom: 70px; color: var(--text-secondary); }
   #desktop-sticky-ad { display: none; }
   .nav-menu li:not(:last-child)::after {
 	  font-size: 11px;
+  }
+}
+
+
+/* ====== HOMEPAGE ARTICLE CONTENT ====== */
+.content-article-container {
+  width: 90%;
+  max-width: 900px; /* Consistent with your DMCA page for readability */
+  margin: 2.5rem auto 0 auto;
+  padding: 0 1rem;
+  box-sizing: border-box;
+}
+
+.content-article {
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 25px 30px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.content-article h2 {
+  font-family: var(--font-primary);
+  font-size: 1.8rem;
+  color: var(--text-primary);
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid var(--accent-red);
+  padding-bottom: 10px;
+}
+
+.content-article h3 {
+  font-family: var(--font-primary);
+  font-size: 1.4rem;
+  color: var(--text-primary);
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.content-article p {
+  color: var(--text-secondary);
+  margin-bottom: 1.25em;
+  line-height: 1.7;
+}
+
+.content-article strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.content-article ul,
+.content-article ol {
+  color: var(--text-secondary);
+  padding-left: 25px;
+  margin-bottom: 1.5rem;
+}
+
+.content-article ul li,
+.content-article ol li {
+  margin-bottom: 1em;
+  line-height: 1.7;
+}
+
+.content-article ul {
+  list-style-type: disc;
+}
+
+.content-article ol {
+  list-style-type: decimal;
+}
+
+.content-article h2:first-of-type {
+  margin-top: 0;
+}
+
+/* FAQ Section Styling */
+.faq-section {
+  margin-top: 2rem;
+}
+
+.faq-item {
+  margin-bottom: 1.5rem;
+}
+
+.faq-item h3 {
+  font-family: var(--font-secondary); /* Using secondary for a question-like feel */
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--accent-red);
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+
+/* Responsive adjustments for the article */
+@media (max-width: 768px) {
+  .content-article-container {
+    width: 100%;
+    margin-top: 2rem;
+  }
+  .content-article {
+    padding: 20px;
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+  }
+  .content-article h2 {
+    font-size: 1.5rem;
+  }
+  .content-article h3 {
+    font-size: 1.2rem;
   }
 }
