@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const categoriesGrid = document.getElementById("categories-grid");
   
   const navMenu = document.getElementById("nav-menu");
-  const prioritySports = ["Football", "Basketball", "Baseball", "Tennis", "UFC", "F1", "Cricket", "Boxing", "American Football", "Ice Hockey"];
+  const prioritySports = ["Football", "Basketball", "Baseball", "Tennis", "UFC", "Motorsport", "Cricket", "Boxing", "American Football", "Ice Hockey"];
   const categoriesSection = document.getElementById("categories-section");
   const scheduleButtonWrapper = document.getElementById("schedule-btn-wrapper");
 
