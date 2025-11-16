@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function generateNavMenu() {
     const isMobile = window.matchMedia("(max-width: 768px)").matches;
-    const maxDynamicItems = isMobile ? 3 : 7;
+    const maxDynamicItems = isMobile ? 2 : 7;
     let menuItems = [];
     const addedSports = new Set();
     if (menuData) {
@@ -253,4 +253,5 @@ document.addEventListener("DOMContentLoaded", () => {
   window.addEventListener('resize', generateNavMenu);
   initializePage();
 });
+
 
