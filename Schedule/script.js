@@ -57,15 +57,30 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     let menuHTML = `<li class="menu-item"><a href="/" class="active">Home</a></li>`;
     // FIX: Encoded the item for the URL to handle spaces correctly
-    menuItems.forEach(item => { menuHTML += `<li class="menu-item"><a href="/Schedule/#/${encodeURIComponent(item.toLowerCase())}">${item}</a></li>`; });
+    menuItems.forEach(item => { menuHTML += `<li class="menu-item"><a href="/Schedule/?sport=${encodeURIComponent(item)}">${item}</a></li>`;});
     navMenu.innerHTML = menuHTML;
   }
   
-  function handleHashChange() {
-    // FIX: Decoded the hash to correctly read sport names with spaces
-    const hash = decodeURIComponent(window.location.hash.replace("#/", "").toLowerCase()) || "all";
-    state.sport = hash;
-    sportSelect.value = state.sport;
+  function handleURLParams() {
+    // Read "?sport=" from the URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const sportParam = urlParams.get('sport');
+    
+    if (sportParam) {
+        state.sport = sportParam.toLowerCase();
+    } else {
+        // Fallback to hash if needed, or default to "all"
+        const hash = decodeURIComponent(window.location.hash.replace("#/", "").toLowerCase());
+        state.sport = hash || "all";
+    }
+
+    // Update the dropdown to match
+    if(sportSelect.querySelector(`option[value="${state.sport}"]`)) {
+        sportSelect.value = state.sport;
+    } else {
+        sportSelect.value = 'all';
+    }
+    
     updateUI();
   }
 
@@ -236,11 +251,17 @@ document.addEventListener("DOMContentLoaded", () => {
       });
       
       statusBtns.forEach(btn => btn.addEventListener("click", (e) => { state.status = e.currentTarget.id.replace('-btn', ''); updateUI(); }));
-      sportSelect.addEventListener("change", (e) => { window.location.hash = e.target.value === 'all' ? '/' : `/${e.target.value}`; });
-      window.addEventListener("hashchange", handleHashChange);
+      sportSelect.addEventListener("change", (e) => { 
+    // When user changes dropdown, update URL without reloading
+    const newSport = e.target.value;
+    const newUrl = newSport === 'all' ? '/Schedule/' : `/Schedule/?sport=${encodeURIComponent(newSport)}`;
+    window.history.pushState({path: newUrl}, '', newUrl);
+    handleURLParams();
+});
+      window.addEventListener("popstate", handleURLParams);
       window.addEventListener('resize', generateNavMenu);
       window.addEventListener('scroll', handleStickyMenu);
-      handleHashChange();
+      handleURLParams();
       generateNavMenu();
 
       tablePlaceholder.style.display = "none";
