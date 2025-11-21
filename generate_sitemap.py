@@ -2,7 +2,7 @@ import requests
 import json
 import time
 import base64
-import os
+import urllib.parse
 from datetime import datetime, timezone
 
 # Configuration
@@ -13,8 +13,8 @@ SITEMAP_FILE = "sitemap.xml"
 # Static pages: Update rarely (set to 1st of current month)
 STATIC_PAGES_MONTHLY = ["/About/", "/Terms/", "/Privacy/", "/Disclaimer/", "/DMCA/", "/Contact/"]
 
-# Dynamic Pages: These change ALL the time (Homepage & Schedule)
-PAGES_ALWAYS = ["", "/Schedule/"] # "" is Homepage
+# Dynamic Pages: These change ALL the time
+PAGES_ALWAYS = ["", "/Schedule/"] 
 
 def get_current_date_str():
     """Returns today's date in YYYY-MM-DD format"""
@@ -26,26 +26,27 @@ def get_first_of_month_str():
     return today.replace(day=1).strftime('%Y-%m-%d')
 
 def generate_id(timestamp, sport, match):
-    """
-    Replicates the JS logic: btoa(unescape(encodeURIComponent(uniqueString)))
-    """
     unique_string = f"{timestamp}_{sport}_{match}"
     encoded_bytes = base64.b64encode(unique_string.encode('utf-8'))
     return encoded_bytes.decode('utf-8')
 
-def get_matches():
+def get_data():
     try:
         response = requests.get(API_URL, timeout=15)
         response.raise_for_status()
-        data = response.json()
+        return response.json()
     except Exception as e:
         print(f"Error fetching API: {e}")
-        return []
+        return None
 
+def create_sitemap():
+    data = get_data()
     if not data or 'events' not in data:
-        return []
+        return
 
-    valid_matches = []
+    match_urls = []
+    sports_categories = set() # Store unique sports
+    
     now = int(time.time()) 
 
     for date_key, events in data['events'].items():
@@ -61,36 +62,36 @@ def get_matches():
                 if not sport or not match_name or not unix_timestamp:
                     continue
 
-                # === EXACT LOGIC FROM YOUR script.js ===
+                # === 1. Collect Categories ===
+                # Your JS logic adds categories if they exist in the API
+                # We add them to the set to ensure uniqueness
+                sports_categories.add(sport)
+
+                # === 2. Filter Matches (Time Logic) ===
                 diff_minutes = (now - unix_timestamp) / 60
                 sport_lower = sport.lower()
 
-                # 1. Logic for Cricket (Keep for 480 mins / 8 hours)
                 if sport_lower == 'cricket' and diff_minutes >= 480:
                     continue 
                 
-                # 2. Logic for Other Sports (Keep for 180 mins / 3 hours)
                 if sport_lower != 'cricket' and diff_minutes >= 180:
                     continue 
                 
                 unique_id = generate_id(unix_timestamp, sport, match_name)
                 url = f"{BASE_URL}/Matchinformation/?id={unique_id}"
-                
-                valid_matches.append(url)
+                match_urls.append(url)
 
             except Exception as e:
                 continue
-                
-    return valid_matches
 
-def create_sitemap(match_urls):
+    # === XML GENERATION ===
     xml_content = '<?xml version="1.0" encoding="UTF-8"?>\n'
     xml_content += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
     
     current_date = get_current_date_str()
     month_start_date = get_first_of_month_str()
 
-    # 1. Add Homepage & Schedule (Set to ALWAYS because they change dynamically)
+    # 1. Homepage & Schedule (ALWAYS)
     for page in PAGES_ALWAYS:
         xml_content += '  <url>\n'
         xml_content += f'    <loc>{BASE_URL}{page}</loc>\n'
@@ -99,7 +100,24 @@ def create_sitemap(match_urls):
         xml_content += '    <priority>1.0</priority>\n'
         xml_content += '  </url>\n'
 
-    # 2. Add Match Pages (Always Today's Date)
+    # 2. Sports Categories (ALWAYS) - Extracted from API
+    # URL Format: /Schedule/#/Football
+    for sport in sorted(list(sports_categories)):
+        # Encode the sport name for URL (e.g., "American Football" -> "American%20Football")
+        encoded_sport = urllib.parse.quote(sport)
+        cat_url = f"{BASE_URL}/Schedule/#/{encoded_sport}"
+        
+        # XML requires & to be escaped
+        safe_url = cat_url.replace("&", "&amp;")
+        
+        xml_content += '  <url>\n'
+        xml_content += f'    <loc>{safe_url}</loc>\n'
+        xml_content += f'    <lastmod>{current_date}</lastmod>\n'
+        xml_content += '    <changefreq>always</changefreq>\n'
+        xml_content += '    <priority>0.9</priority>\n' # High priority
+        xml_content += '  </url>\n'
+
+    # 3. Match Pages (ALWAYS)
     for url in match_urls:
         safe_url = url.replace("&", "&amp;")
         xml_content += '  <url>\n'
@@ -109,7 +127,7 @@ def create_sitemap(match_urls):
         xml_content += '    <priority>0.8</priority>\n'
         xml_content += '  </url>\n'
 
-    # 3. Add Static Pages (Date = 1st of Current Month)
+    # 4. Static Pages (MONTHLY)
     for page in STATIC_PAGES_MONTHLY:
         xml_content += '  <url>\n'
         xml_content += f'    <loc>{BASE_URL}{page}</loc>\n'
@@ -122,8 +140,7 @@ def create_sitemap(match_urls):
     
     with open(SITEMAP_FILE, "w", encoding="utf-8") as f:
         f.write(xml_content)
-    print(f"Sitemap updated: {len(match_urls)} matches found.")
+    print(f"Sitemap updated: {len(sports_categories)} categories, {len(match_urls)} matches.")
 
 if __name__ == "__main__":
-    matches = get_matches()
-    create_sitemap(matches)
+    create_sitemap()
