@@ -53,7 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
     
     let menuHTML = `<li class="menu-item schedule-item"><a href="/Schedule/">Schedule</a></li>`;
     menuItems.forEach(item => {
-      menuHTML += `<li class="menu-item"><a href="/Schedule/#/${encodeURIComponent(item)}">${item}</a></li>`;
+      menuHTML += `<li class="menu-item"><a href="/Schedule/?sport=${encodeURIComponent(item)}">${item}</a></li>`;
     });
     navMenu.innerHTML = menuHTML;
   }
@@ -120,7 +120,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (sportsData.sortedByLive.length > 0) {
           sportsData.sortedByLive.forEach(category => {
             const categoryCard = document.createElement("a");
-            categoryCard.href = `/Schedule/#/${encodeURIComponent(category.name)}`;
+            categoryCard.href = `/Schedule/?sport=${encodeURIComponent(category.name)}`;
             categoryCard.className = "category-card";
 
             const categoryName = document.createElement("span");
@@ -156,5 +156,6 @@ document.addEventListener("DOMContentLoaded", () => {
   window.addEventListener('resize', generateNavMenu);
   initializePage();
 });
+
 
 
