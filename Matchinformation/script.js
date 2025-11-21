@@ -58,7 +58,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     let menuHTML = `<li class="menu-item"><a href="/">Home</a></li><li class="menu-item"><a href="/Schedule/">Schedule</a></li>`;
     // FIX: Encoded the item for the URL to ensure links back to the schedule page work for all sport names.
-    menuItems.forEach(item => { menuHTML += `<li class="menu-item"><a href="/Schedule/#/${encodeURIComponent(item.toLowerCase())}">${item}</a></li>`; });
+    menuItems.forEach(item => { menuHTML += `<li class="menu-item"><a href="/Schedule/?sport=${encodeURIComponent(item)}">${item}</a></li>`; });
     navMenu.innerHTML = menuHTML;
   }
   
@@ -238,3 +238,4 @@ document.addEventListener("DOMContentLoaded", () => {
   window.addEventListener('resize', generateNavMenu);
   initializePage();
 });
+
