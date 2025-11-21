@@ -1,0 +1,36 @@
+name: Update Sitemap Every 15 Mins
+
+on:
+  schedule:
+    # Run every 15 minutes
+    - cron: '*/15 * * * *'
+  workflow_dispatch: # Allows manual button click
+
+permissions:
+  contents: write
+
+jobs:
+  update-sitemap:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install Requests
+        run: pip install requests
+
+      - name: Generate Sitemap
+        run: python generate_sitemap.py
+
+      - name: Commit and Push if Changed
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add sitemap.xml
+          # Only commit if the file has actually changed
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-update sitemap matches [skip ci]" && git push)
