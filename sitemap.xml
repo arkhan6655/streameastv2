@@ -145,79 +145,7 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://streameastv2.world/Matchinformation/?id=MTc2NDQ4OTYwMF9UZW5uaXNfRmxvcmlhbiBCcm9za2EgLSBGYXVzdG8gVGFiYWNjbw==</loc>
-    <lastmod>2025-11-30</lastmod>
-    <changefreq>always</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://streameastv2.world/Matchinformation/?id=MTc2NDQ4OTYwMF9UZW5uaXNfTWVydCBBbGtheWEgLSBKYXkgQ2xhcmtl</loc>
-    <lastmod>2025-11-30</lastmod>
-    <changefreq>always</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://streameastv2.world/Matchinformation/?id=MTc2NDQ4OTYwMF9UZW5uaXNfUGF1bCBBbnRvaW5lIEJyYXpldCAtIFJhcGhhZWwgUGljaG90</loc>
-    <lastmod>2025-11-30</lastmod>
-    <changefreq>always</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://streameastv2.world/Matchinformation/?id=MTc2NDQ4OTYwMF9Dcmlja2V0X1ByaW1lIE1pbmlzdGVycyBYSSAtIEVuZ2xhbmQgTGlvbnM=</loc>
-    <lastmod>2025-11-30</lastmod>
-    <changefreq>always</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://streameastv2.world/Matchinformation/?id=MTc2NDQ4OTcyMF9UZW5uaXNfWmVlbCBEZXNhaSAtIERhbGlsYSBKYWt1cG92aWM=</loc>
-    <lastmod>2025-11-30</lastmod>
-    <changefreq>always</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://streameastv2.world/Matchinformation/?id=MTc2NDQ4OTkwMF9UZW5uaXNfS2Fqc2EgUmluYWxkbyBQZXJzc29uIC0gVGVyZXphIE1hcnRpbmNvdmE=</loc>
-    <lastmod>2025-11-30</lastmod>
-    <changefreq>always</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://streameastv2.world/Matchinformation/?id=MTc2NDQ5MDAyMF9UZW5uaXNfVmFsZW50aW5hIFJ5c2VyIC0gRXN6dGVyIERvcmthIEZpbmFr</loc>
-    <lastmod>2025-11-30</lastmod>
-    <changefreq>always</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://streameastv2.world/Matchinformation/?id=MTc2NDQ5MDA4MF9UZW5uaXNfRWthdGVyaW5hIFlhc2hpbmEgLSBTaHJpdmFsbGkgQmhhbWlkaXBhdHk=</loc>
-    <lastmod>2025-11-30</lastmod>
-    <changefreq>always</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://streameastv2.world/Matchinformation/?id=MTc2NDQ5MDA4MF9UZW5uaXNfS3NlbmlhIFpheXRzZXZhIC0gS2F0YXJpbmEgWmF2YXRza2E=</loc>
-    <lastmod>2025-11-30</lastmod>
-    <changefreq>always</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://streameastv2.world/Matchinformation/?id=MTc2NDQ5MDA4MF9UZW5uaXNfUmFkYSBab2xvdGFyZXZhIC0gRW1pbHkgQXBwbGV0b24=</loc>
-    <lastmod>2025-11-30</lastmod>
-    <changefreq>always</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://streameastv2.world/Matchinformation/?id=MTc2NDQ5MDIwMF9CYWRtaW50b25fSy5LYW5nL0EuVGFpIC0gV2VpamllIENoaWEvU2hlbmcgSGFvIEx3aQ==</loc>
-    <lastmod>2025-11-30</lastmod>
-    <changefreq>always</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://streameastv2.world/Matchinformation/?id=MTc2NDQ5MDIwMF9UZW5uaXNfTWloYWkgQWxleGFuZHJ1IENvbWFuIC0gQW1tYXIgRWxhbWlu</loc>
-    <lastmod>2025-11-30</lastmod>
-    <changefreq>always</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://streameastv2.world/Matchinformation/?id=MTc2NDQ5MDIwMF9UZW5uaXNfVmFzaWxlIEFudG9uZXNjdSAtIFR3YW4gdmFuIFppamw=</loc>
     <lastmod>2025-11-30</lastmod>
     <changefreq>always</changefreq>
     <priority>0.8</priority>
@@ -434,6 +362,12 @@
   </url>
   <url>
     <loc>https://streameastv2.world/Matchinformation/?id=MTc2NDQ5Nzc2MF9UZW5uaXNfRWthdGVyaW5hIFlhc2hpbmEgLSBTaHJpdmFsbGkgQmhhbWlkaXBhdHk=</loc>
+    <lastmod>2025-11-30</lastmod>
+    <changefreq>always</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://streameastv2.world/Matchinformation/?id=MTc2NDQ5ODM2MF9UZW5uaXNfS2hyeXN0eW5hIFZvem5pYWsgLSBFbm9sYSBDaGllc2E=</loc>
     <lastmod>2025-11-30</lastmod>
     <changefreq>always</changefreq>
     <priority>0.8</priority>
