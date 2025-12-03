@@ -133,49 +133,13 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://streameastv2.world/Matchinformation/?id=MTc2NDc3MjIwMF9IYW5kYmFsbF9DemVjaCAoRikgLSBBbmdvbGEgKEYp</loc>
-    <lastmod>2025-12-03</lastmod>
-    <changefreq>always</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://streameastv2.world/Matchinformation/?id=MTc2NDc3MjIwMF9Gb290YmFsbF9JcmFxIC0gQmFocmFpbg==</loc>
-    <lastmod>2025-12-03</lastmod>
-    <changefreq>always</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://streameastv2.world/Matchinformation/?id=MTc2NDc3MjIwMF9IYW5kYmFsbF9KYXBhbiAoRikgLSBFbHZlxaNpYSAoRik=</loc>
-    <lastmod>2025-12-03</lastmod>
-    <changefreq>always</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://streameastv2.world/Matchinformation/?id=MTc2NDc3MjIwMF9IYW5kYmFsbF9KYXBhbiAoRikgLSBTd2lzcyAoRik=</loc>
-    <lastmod>2025-12-03</lastmod>
-    <changefreq>always</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://streameastv2.world/Matchinformation/?id=MTc2NDc3MjIwMF9Dcmlja2V0X1NoYXJqYWggV2FycmlvcnMgLSBBYnUgRGhhYmkgS25pZ2h0IFJpZGVycw==</loc>
     <lastmod>2025-12-03</lastmod>
     <changefreq>always</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://streameastv2.world/Matchinformation/?id=MTc2NDc3MjIwMF9Gb290YmFsbF9TcGFydGFrIFN1Ym90aWNhIC0gWmVtdW4=</loc>
-    <lastmod>2025-12-03</lastmod>
-    <changefreq>always</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://streameastv2.world/Matchinformation/?id=MTc2NDc3MjIwMF9Dcmlja2V0X1dhcnJpb3J6IC0gS25pZ2h0IFJpZGVycw==</loc>
-    <lastmod>2025-12-03</lastmod>
-    <changefreq>always</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://streameastv2.world/Matchinformation/?id=MTc2NDc3MjgwMF9UZW5uaXNfQ2Fyb2xpbmEgS3VobCAtIFBvbGluYSBLdWhhcmVua28=</loc>
     <lastmod>2025-12-03</lastmod>
     <changefreq>always</changefreq>
     <priority>0.8</priority>
@@ -560,6 +524,12 @@
   </url>
   <url>
     <loc>https://streameastv2.world/Matchinformation/?id=MTc2NDc4MDYwMF9Wb2xsZXliYWxsX1QuU2lsdmEgQmlnaS9BLkNhdmFsY2FudGkgUmFtYWxobyAtIEMuSG9ydGEgTWF4aW1vL0UuU2Vjb21hbmRpIE1haWE=</loc>
+    <lastmod>2025-12-03</lastmod>
+    <changefreq>always</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://streameastv2.world/Matchinformation/?id=MTc2NDc4MDYwMF9Wb2xsZXliYWxsX1YuRHZvcm5pa292YS9WLktsZWlibG92YSAtIEsuS29saW5za2UvU2hpZWxkcwlN</loc>
     <lastmod>2025-12-03</lastmod>
     <changefreq>always</changefreq>
     <priority>0.8</priority>
@@ -2725,12 +2695,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://streameastv2.world/Matchinformation/?id=MTc2NDg3MzAwMF9Hb2xmX0hlcm8gV29ybGQgQ2hhbGxlbmdl</loc>
-    <lastmod>2025-12-03</lastmod>
-    <changefreq>always</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://streameastv2.world/Matchinformation/?id=MTc2NDg3MzAwMF9CYXNrZXRiYWxsX01vbmFjbyAtIFBhcmlz</loc>
     <lastmod>2025-12-03</lastmod>
     <changefreq>always</changefreq>
@@ -3290,12 +3254,6 @@
   </url>
   <url>
     <loc>https://streameastv2.world/Matchinformation/?id=MTc2NDk1NzYwMF9CYXNrZXRiYWxsX1phZGFyIC0gVmllbm5hIEJhc2tldA==</loc>
-    <lastmod>2025-12-03</lastmod>
-    <changefreq>always</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://streameastv2.world/Matchinformation/?id=MTc2NDk1OTQwMF9Hb2xmX0hlcm8gV29ybGQgQ2hhbGxlbmdl</loc>
     <lastmod>2025-12-03</lastmod>
     <changefreq>always</changefreq>
     <priority>0.8</priority>
@@ -4466,12 +4424,6 @@
   </url>
   <url>
     <loc>https://streameastv2.world/Matchinformation/?id=MTc2NTEyNTAwMF9Gb290YmFsbF9GdWxoYW0gLSBDcnlzdGFsIFBhbGFjZQ==</loc>
-    <lastmod>2025-12-03</lastmod>
-    <changefreq>always</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://streameastv2.world/Matchinformation/?id=MTc2NTEyNTAwMF9Hb2xmX0hlcm8gV29ybGQgQ2hhbGxlbmdl</loc>
     <lastmod>2025-12-03</lastmod>
     <changefreq>always</changefreq>
     <priority>0.8</priority>
